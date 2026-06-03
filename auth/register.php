@@ -16,36 +16,7 @@
 		
 		<title>Dreams LMS | Advanced Learning Management System Template</title>
 
-		<!-- Favicon -->
-		<link rel="shortcut icon" href="assets/img/favicon.png"> 
-		<link rel="apple-touch-icon" href="assets/img/apple-icon.png">
-        
-		<!-- Bootstrap CSS -->
-		<!-- <link rel="stylesheet" href="./assets/css/bootstrap.min.css"> -->
-		<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-		
-		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
-		<link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
-
-		<!-- Select2 CSS -->
-		<link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
-		
-        <!-- Slick CSS -->
-		<link rel="stylesheet" href="../assets/plugins/slick/slick.css">
-		<link rel="stylesheet" href="assets/plugins/slick/slick-theme.css">
-		
-		<!-- Feathericon CSS -->
-        <link rel="stylesheet" href="../assets/plugins/feather/feather.css">
-
-		<!-- Tabler Icon CSS -->
-		<link rel="stylesheet" href="../assets/plugins/tabler-icons/tabler-icons.css">
-
-        <!-- Iconsax CSS -->
-		<link rel="stylesheet" href="../assets/css/iconsax.css">
-
-		<!-- Main CSS -->
-		<link rel="stylesheet" href="../assets/css/style.css">
+        <?php @include('../includes/header.php'); ?>
 	
 	</head>
 	<body><a href="../../cdn-cgi/content423e.html?id=8SiUIKxD45G19c3Z2BY96k2jBSRoAQ8AsFKA8NvRfcY-1780432722.0861692-1.0.1.1-pZ4JIi5bxjUAY4Z3VO9etHDu3.byoNSmY1Be66ddLzs" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>

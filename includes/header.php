@@ -27,11 +27,26 @@
 	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
 	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+	<!-- Select2 CSS -->
+	<link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
+
+	<!-- Slick CSS -->
+	<link rel="stylesheet" href="../assets/plugins/slick/slick.css">
+	<link rel="stylesheet" href="../assets/plugins/slick/slick-theme.css">
+
 	<!-- Feather CSS -->
 	<link rel="stylesheet" href="../assets/css/feather.css">
 
+	<!-- Feathericon CSS -->
+	<link rel="stylesheet" href="../assets/plugins/feather/feather.css">
+
 	<!-- Daterangepikcer CSS -->
 	<link rel="stylesheet" href="../assets/plugins/daterangepicker/daterangepicker.css">
+
+	<!-- Tabler Icon CSS -->
+	<link rel="stylesheet" href="../assets/plugins/tabler-icons/tabler-icons.css">
 
 	<!-- Iconsax CSS -->
 	<link rel="stylesheet" href="../assets/css/iconsax.css">

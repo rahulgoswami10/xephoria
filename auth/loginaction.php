@@ -2,9 +2,17 @@
 
 session_start();
 
+
 @include('../db/connection.php');
 
 if (isset($_POST['login'])) {
+
+    $user_captcha = $_POST['captcha'];
+
+    if ($user_captcha != $_SESSION['captcha']) {
+        echo "Invalid Captcha!";
+        exit();
+    }
 
     $email = $_POST['email'];
     $password = $_POST['password'];

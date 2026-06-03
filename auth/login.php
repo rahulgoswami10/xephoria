@@ -1,52 +1,20 @@
+<?php
+
+session_start();
+
+$captcha = substr(str_shuffle("123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+
+$_SESSION['captcha'] = $captcha;
+
+?>  
+
 <!DOCTYPE html> 
 <html lang="en">
 	
-<!-- Mirrored from dreamslms.dreamstechnologies.com/html/template/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jun 2026 20:52:11 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
-<head>
-	
-		<!-- Meta Tags -->
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="Dreams LMS is a powerful Learning Management System template designed for educators, training institutions, and businesses. Manage courses, track student progress, conduct virtual classes, and enhance e-learning experiences with an intuitive and feature-rich platform.">
-		<meta name="keywords" content="LMS template, Learning Management System, e-learning software, online course platform, student management, education portal, virtual classroom, training management system, course tracking, online education">
-		<meta name="author" content="Dreams Technologies">
-		<meta name="robots" content="index, follow">
-		
-		<title>Dreams LMS | Advanced Learning Management System Template</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
-		<!-- Favicon -->
-		<link rel="shortcut icon" href="../assets/img/favicon.png"> 
-		<link rel="apple-touch-icon" href="../assets/img/apple-icon.png">
-        
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-		
-		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
-		<link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
+    <?php @include('../includes/header.php'); ?>
 
-		<!-- Select2 CSS -->
-		<link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
-		
-        <!-- Slick CSS -->
-		<link rel="stylesheet" href="../assets/plugins/slick/slick.css">
-		<link rel="stylesheet" href="../assets/plugins/slick/slick-theme.css">
-		
-		<!-- Feathericon CSS -->
-        <link rel="stylesheet" href="../assets/plugins/feather/feather.css">
-
-		<!-- Tabler Icon CSS -->
-		<link rel="stylesheet" href="../assets/plugins/tabler-icons/tabler-icons.css">
-
-        <!-- Iconsax CSS -->
-		<link rel="stylesheet" href="../assets/css/iconsax.css">
-
-		<!-- Main CSS -->
-		<link rel="stylesheet" href="../assets/css/style.css">
-	
-	</head>
 	<body>
         
     <a href="../../cdn-cgi/content7cd3.html?id=Aa0CJqjMftjUQ1w9XXgRfY4CzqYcUQtv4hbP.f6tQ4M-1780432721.7978685-1.0.1.1-3VjJIyD2y3Fdl34n4b8zrOB_KsqMzrjI1y4HZNe7IUc" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
@@ -105,6 +73,39 @@
                                             </div>	
                                         </div>
 
+
+                                        <div class="mb-3">
+
+                                            <label class="form-label">
+                                                Captcha
+                                                <span class="text-danger ms-1">*</span>
+                                            </label>
+
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+
+                                                <div class="text-white px-4 py-2 rounded fw-bold" 
+                                                    style="background-color: hsla(0 10% 20% / .45);"
+                                                >
+                                                    <?php echo $_SESSION['captcha']; ?>
+                                                </div>
+
+                                                <button type="button" 
+                                                        onclick="window.location.reload();" 
+                                                        class="btn btn-sm btn-outline-secondary">
+
+                                                    Refresh
+
+                                                </button>
+
+                                            </div>
+
+                                            <input type="text"
+                                                name="captcha"
+                                                class="form-control form-control-lg"
+                                                placeholder="Enter Captcha">
+
+                                        </div>
+
                                         <!-- remember me checkbox -->
                                         <div class="d-flex align-items-center justify-content-between mb-4">
                                             <div class="remember-me d-flex align-items-center">
@@ -119,11 +120,13 @@
                                                 </a>
                                             </div>
                                         </div>
+
+                                        <!-- button -->
                                         <div class="d-grid">
                                             <button class="btn btn-secondary btn-lg" type="submit" name="login">
-                                                Login <i class="isax isax-arrow-right-3 ms-1"></i>
+                                                Login <i class="fa-solid fa-arrow-right-long"></i>
                                             </button>
-                                        </div>
+                                        </div>  
                                     </form>
 
                                     <div class="d-flex align-items-center justify-content-center or fs-14 mb-3">
