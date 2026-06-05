@@ -1,9 +1,26 @@
+
+<?php
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	header("Location: ../auth/login.php");
+	exit();
+}
+
+if ($_SESSION['user_type'] != 2) {
+	
+	header("Location: ../index.php");
+	exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 
-<!-- Mirrored from dreamslms.dreamstechnologies.com/html/template/add-course.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jun 2026 20:50:59 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
 <head>
 
 	<!-- Meta Tags -->
@@ -20,504 +37,55 @@
 	<title>Dreams LMS | Advanced Learning Management System Template</title>
 
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="assets/img/favicon.png">
-	<link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+	<link rel="shortcut icon" href="../assets/img/favicon.png">
+	<link rel="apple-touch-icon" href="../assets/img/apple-icon.png">
 
 	<!-- Theme Settings Js -->
-	<script src="assets/js/theme-script.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/js/theme-script.js"></script>
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
 	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
+
+	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
 
 	<!-- Feather CSS -->
-	<link rel="stylesheet" href="assets/css/feather.css">
+	<link rel="stylesheet" href="../assets/css/feather.css">
 
 	<!-- Select2 CSS -->
-	<link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="../assets/plugins/select2/css/select2.min.css">
 
 	<!-- Bootstrap Tagsinput CSS -->
-	<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+	<link rel="stylesheet" href="../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
 
 	<!-- Summernote JS -->
-	<link rel="stylesheet" href="assets/plugins/summernote/summernote-lite.min.css">
+	<link rel="stylesheet" href="../assets/plugins/summernote/summernote-lite.min.css">
 
 	<!-- Iconsax CSS -->
-	<link rel="stylesheet" href="assets/css/iconsax.css">
+	<link rel="stylesheet" href="../assets/css/iconsax.css">
 
 	<!-- Main CSS -->
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/style.css">
 
 </head>
 
-<body><a href="../../cdn-cgi/contentcb94.html?id=2IkvY.8DM.4OR9oniwLRAvVIgpr38vO4iuw8x6BrujY-1780432679.0080192-1.0.1.1-NmElfWIW2RP0sJmm.456Un1HmygKKUEXQX05hKNnnVo" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
+
+<body>
+	
+	<a href="../../cdn-cgi/contentcb94.html?id=2IkvY.8DM.4OR9oniwLRAvVIgpr38vO4iuw8x6BrujY-1780432679.0080192-1.0.1.1-NmElfWIW2RP0sJmm.456Un1HmygKKUEXQX05hKNnnVo" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
 
 	<!-- Main Wrapper -->
 	<div class="main-wrapper">
 
-		<!-- Header Topbar-->
-		<div class="header-topbar text-center">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="d-flex align-items-center justify-content-center justify-content-lg-start">
-							<p class="d-flex align-items-center fw-medium fs-14 mb-2 me-3"><i
-									class="isax isax-location5 me-2"></i>1442 Crosswind Drive Madisonville</p>
-							<p class="d-flex align-items-center fw-medium fs-14 mb-2"><i
-									class="isax isax-call-calling5 me-2"></i>+1 45887 77874</p>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="d-flex align-items-center justify-content-center justify-content-lg-end">
-							<div class="dropdown flag-dropdown mb-2 me-3">
-								<a href="javascript:void(0);" class="dropdown-toggle d-inline-flex align-items-center"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
-								</a>
-								<ul class="dropdown-menu p-2 mt-2">
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center" href="#">
-											<img src="assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center" href="#">
-											<img src="assets/img/flags/arab-flag.svg" class="me-2" alt="flag">ARA
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center" href="#">
-											<img src="assets/img/flags/france-flag.svg" class="me-2" alt="flag">FRE
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="dropdown mb-2 me-3">
-								<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									USD
-								</a>
-								<ul class="dropdown-menu p-2 mt-2">
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">USD</a></li>
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">YEN</a></li>
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">EURO</a></li>
-								</ul>
-							</div>
-							<ul class="social-icon d-flex align-items-center mb-2">
-								<li class="me-2">
-									<a href="#" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-								</li>
-								<li class="me-2">
-									<a href="#" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
-								</li>
-								<li class="me-2">
-									<a href="#" aria-label="twitter"><i class="fa-brands fa-x-twitter"></i></a>
-								</li>
-								<li class="me-2">
-									<a href="#" aria-label="youtube"><i class="fa-brands fa-youtube"></i></a>
-								</li>
-								<li>
-									<a href="#" aria-label="linkedin"><i class="fa-brands fa-linkedin"></i></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Header Topbar-->
 
-		<!-- Header -->
-		<header class="header-two">
-			<div class="container">
-				<div class="header-nav">
-					<div class="navbar-header">
-						<a id="mobile_btn" href="javascript:void(0);">
-							<span class="bar-icon">
-								<span></span>
-								<span></span>
-								<span></span>
-							</span>
-						</a>
-						<div class="navbar-logo">
-							<a class="logo-white header-logo" href="index-2.html">
-								<img src="assets/img/logo.svg" class="logo" alt="Logo">
-							</a>
-							<a class="logo-dark header-logo" href="index-2.html">
-								<img src="assets/img/logo-white.svg" class="logo" alt="Logo">
-							</a>
-						</div>
-					</div>
-					<div class="main-menu-wrapper">
-						<div class="menu-header">
-							<a href="index-2.html" class="menu-logo">
-								<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
-							</a>
-							<a id="menu_close" class="menu-close" href="javascript:void(0);">
-								<i class="fas fa-times"></i>
-							</a>
-						</div>
-						<ul class="main-nav">
-							<li class="has-submenu megamenu">
-								<a href="#">Home <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu mega-submenu">
-									<li>
-										<div class="megamenu-wrapper">
-											<div class="row">
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-2.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-01.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-2.html" class="inner-demo-img">General
-																Education</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-3.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-02.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-3.html" class="inner-demo-img">Online
-																Course</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-4.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-03.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-4.html" class="inner-demo-img">Online
-																Academy</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-5.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-04.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-5.html" class="inner-demo-img">Digital
-																Learning</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-8.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-07.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-8.html" class="inner-demo-img">
-																University</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-7.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-06.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-7.html" class="inner-demo-img">Kinder
-																Garden</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-6.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-05.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-6.html" class="inner-demo-img">Language
-																Academy</a>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-3">
-													<div class="single-demo">
-														<div class="demo-img">
-															<a href="index-9.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-08.jpg" class="img-fluid "
-																	alt="img"></a>
-														</div>
-														<div class="demo-info">
-															<a href="index-9.html" class="inner-demo-img"> Gym Training
-															</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</li>
-							<li class="has-submenu active">
-								<a href="#">Courses <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li class="has-submenu">
-										<a href="#">Courses</a>
-										<ul class="submenu">
-											<li><a href="course-grid.html">Course Grid</a></li>
-											<li><a href="course-list.html">Course List</a></li>
-										</ul>
-									</li>
-									<li class="has-submenu">
-										<a href="#">Course Category</a>
-										<ul class="submenu">
-											<li><a href="course-category.html">Course Category</a></li>
-											<li><a href="course-category-2.html">Course Category 2</a></li>
-											<li><a href="course-category-3.html">Course Category 3</a></li>
-										</ul>
-									</li>
-									<li class="has-submenu">
-										<a href="#">Course Details</a>
-										<ul class="submenu">
-											<li><a href="course-details.html">Course Details</a></li>
-											<li><a href="course-details-2.html">Course Details 2</a></li>
-										</ul>
-									</li>
-									<li><a href="course-resume.html">Course Resume</a></li>
-									<li><a href="course-watch.html">Course Watch</a></li>
-									<li><a href="cart.html">Course Cart</a></li>
-									<li><a href="checkout.html">Course Checkout</a></li>
-									<li class="active"><a href="add-course.html">Add New Course</a></li>
-								</ul>
-							</li>
-							<li class="has-submenu">
-								<a href="#">Dashboard <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li class="has-submenu">
-										<a href="#">Instructor Dashboard</a>
-										<ul class="submenu">
-											<li><a href="instructor-dashboard.html">Dashboard</a></li>
-											<li><a href="instructor-profile.html">My Profile</a></li>
-											<li><a href="instructor-course.html">Course</a></li>
-											<li><a href="instructor-announcements.html">Announcements</a></li>
-											<li><a href="instructor-assignment.html">Assignments</a></li>
-											<li class="has-submenu">
-												<a href="#">Student</a>
-												<ul class="submenu">
-													<li><a href="students.html">Student Grid</a></li>
-													<li><a href="student-list.html">Student List</a></li>
-													<li><a href="student-details.html">Student Details</a></li>
-												</ul>
-											</li>
-											<li><a href="instructor-quiz.html">Quiz</a></li>
-											<li><a href="instructor-quiz-results.html">Quiz Results</a></li>
-											<li><a href="instructor-certificate.html">Certificates</a></li>
-											<li><a href="instructor-earnings.html">Earning</a></li>
-											<li><a href="instructor-payout.html">Payout</a></li>
-											<li><a href="instructor-statements.html">Statement</a></li>
-											<li><a href="instructor-tickets.html">Support Tickets</a></li>
-											<li><a href="instructor-settings.html">Settings</a></li>
-										</ul>
-									</li>
-									<li class="has-submenu">
-										<a href="#">Student Dashboard</a>
-										<ul class="submenu">
-											<li><a href="student-dashboard.html">Student Dashboard</a></li>
-											<li><a href="student-profile.html">My Profile</a></li>
-											<li><a href="student-courses.html">Enrolled Courses</a></li>
-											<li><a href="student-certificates.html">My Certificates</a></li>
-											<li><a href="student-wishlist.html">Wishlist</a></li>
-											<li><a href="student-reviews.html">Reviews</a></li>
-											<li><a href="student-quiz.html">My Quiz Attempts</a></li>
-											<li><a href="student-order-history.html">Order History</a></li>
-											<li><a href="student-referral.html">Referrals</a></li>
-											<li><a href="student-messages.html">Messages</a></li>
-											<li><a href="student-tickets.html">Support Ticket</a></li>
-											<li><a href="student-settings.html">Settings</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li class="has-submenu">
-								<a href="#">Pages <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li class="has-submenu">
-										<a href="#">Instructors</a>
-										<ul class="submenu">
-											<li><a href="instructor-grid.html">Instructor Grid</a></li>
-											<li><a href="instructor-list.html">Instructor List</a></li>
-											<li><a href="instructor-details.html">Instructor Details</a></li>
-										</ul>
-									</li>
-									<li><a href="about-us.html">About Us</a></li>
-									<li><a href="contact-us.html">Contact us</a></li>
-									<li><a href="notifications.html">Notifications</a></li>
-									<li><a href="become-an-instructor.html">Become an Instructor</a></li>
-									<li><a href="testimonials.html">Testimonials</a></li>
-									<li class="has-submenu">
-										<a href="#">Authentication</a>
-										<ul class="submenu">
-											<li><a href="login.html">Login</a></li>
-											<li><a href="register.html">Register</a></li>
-											<li><a href="forgot-password.html">Forgot Password</a></li>
-											<li><a href="reset-password.html">Reset Password</a></li>
-											<li><a href="set-password.html">Set Password</a></li>
-											<li><a href="otp.html">OTP</a></li>
-											<li><a href="lock-screen.html">Lock Screen</a></li>
-										</ul>
-									</li>
-									<li class="has-submenu">
-										<a href="#">Error</a>
-										<ul class="submenu">
-											<li><a href="error-404.html">404 Error</a></li>
-											<li><a href="error-500.html">500 Error</a></li>
-										</ul>
-									</li>
-									<li><a href="pricing-plan.html">Pricing Plan</a></li>
-									<li><a href="faq.html">FAQ</a></li>
-									<li><a href="coming-soon.html">Coming Soon</a></li>
-									<li><a href="under-construction.html">Under Construction</a></li>
-									<li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
-									<li><a href="privacy-policy.html">Privacy Policy</a></li>
-									<li><a href="index-rtl.html">RTL</a></li>
-								</ul>
-							</li>
-							<li class="has-submenu">
-								<a href="#">Blog <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li class="has-submenu">
-										<a href="#">Blog Layouts</a>
-										<ul class="submenu">
-											<li><a href="blog-grid.html">Blog 1 Grid</a></li>
-											<li><a href="blog-2-grid.html">Blog 2 Grid</a></li>
-											<li><a href="blog-3-grid.html">Blog 3 Grid</a></li>
-											<li><a href="blog-carousal.html">Blog Carousal</a></li>
-											<li><a href="blog-masonry.html">Blog Mansory</a></li>
-											<li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-											<li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
-										</ul>
-									</li>
-									<li class="has-submenu">
-										<a href="#">Blog Details</a>
-										<ul class="submenu">
-											<li><a href="blog-details.html">Blog Details</a></li>
-											<li><a href="blog-details-left-sidebar.html">Blog Details Left Sidebar</a>
-											</li>
-											<li><a href="blog-details-right-sidebar.html">Blog Details Right Sidebar</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
+		<!--==== topbar ====-->
+		<?php @include('../includes/topbar.php'); ?>
 
-						<div class="menu-dropdown">
-							<div class="cart-item">
-								<h6>Cart & Wishlist</h6>
-								<div class="icon-btn">
-									<a href="cart.html" class="position-relative">
-										<i class="isax isax-shopping-cart5"></i>
-										<span
-											class="count-icon bg-success p-1 rounded-pill text-white fs-10 fw-bold">1</span>
-									</a>
-								</div>
-							</div>
-							<div class="dropdown flag-dropdown mb-2">
-								<a href="#" class="dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"
-									aria-expanded="false">
-									<img src="assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
-								</a>
-								<ul class="dropdown-menu p-2 mt-2">
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center" href="#">
-											<img src="assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center" href="#">
-											<img src="assets/img/flags/arab-flag.svg" class="me-2" alt="flag">ARA
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center" href="#">
-											<img src="assets/img/flags/france-flag.svg" class="me-2" alt="flag">FRE
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="dropdown mb-2">
-								<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									USD
-								</a>
-								<ul class="dropdown-menu p-2 mt-2">
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">USD</a></li>
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">YEN</a></li>
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">EURO</a></li>
-								</ul>
-							</div>
-							<div class="dropdown mb-2">
-								<a href="#" class="dropdown-toggle theme-dropdown-toggle" data-bs-toggle="dropdown"
-									aria-expanded="false">
-									Light
-								</a>
-								<ul class="dropdown-menu p-2 mt-2">
-									<li><a class="dropdown-item rounded light-mode-dropdown"
-											href="javascript:void(0);">Light</a></li>
-									<li><a class="dropdown-item rounded dark-mode-dropdown"
-											href="javascript:void(0);">Dark</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="menu-login">
-							<a href="login.html" class="btn btn-primary w-100 mb-2"><i
-									class="isax isax-user me-2"></i>Sign In</a>
-							<a href="register.html" class="btn btn-secondary w-100"><i
-									class="isax isax-user-edit me-2"></i>Register</a>
-						</div>
-					</div>
-					<div class="header-btn d-flex align-items-center">
-						<div class="icon-btn me-2">
-							<a href="javascript:void(0);" id="dark-mode-toggle" class="theme-toggle activate">
-								<i class="isax isax-sun-15"></i>
-							</a>
-							<a href="javascript:void(0);" id="light-mode-toggle" class="theme-toggle">
-								<i class="isax isax-moon"></i>
-							</a>
-						</div>
-						<div class="icon-btn me-3">
-							<a href="cart.html" class="position-relative">
-								<i class="isax isax-shopping-cart5"></i>
-								<span class="count-icon bg-success p-1 rounded-pill text-white fs-10 fw-bold">1</span>
-							</a>
-						</div>
-						<a href="login.html" class="btn btn-light d-inline-flex align-items-center me-2">
-							<i class="isax isax-lock-circle me-2"></i>Sign In
-						</a>
-						<a href="register.html" class="btn btn-secondary me-0">
-							<i class="isax isax-user-edit me-2"></i>Register
-						</a>
-					</div>
-				</div>
-			</div>
-		</header>
-		<!-- /Header -->
+		<!--==== navbar ====-->
+		<?php @include('../includes/navbar.php');  ?>
+
 
 		<!-- Breadcrumb -->
 		<div class="breadcrumb-bar text-center">
@@ -545,6 +113,8 @@
 						<div class="add-course-item">
 							<div class="wizard">
 								<ul class="form-wizard-steps" id="progressbar2">
+
+									<!-- step 1 -->
 									<li class="progress-active">
 										<div class="profile-step">
 											<span class="dot-active mb-2">
@@ -556,6 +126,8 @@
 											</div>
 										</div>
 									</li>
+
+									<!-- step 2 -->
 									<li>
 										<div class="profile-step">
 											<span class="dot-active mb-2">
@@ -567,7 +139,9 @@
 											</div>
 										</div>
 									</li>
-									<li>
+
+									<!-- step 3 -->
+									<!-- <li>
 										<div class="profile-step">
 											<span class="dot-active mb-2">
 												<span class="number">03</span>
@@ -577,8 +151,10 @@
 												<p>Curriculam</p>
 											</div>
 										</div>
-									</li>
-									<li>
+									</li> -->
+
+									<!-- step 4 -->
+									<!-- <li>
 										<div class="profile-step">
 											<span class="dot-active mb-2">
 												<span class="number">04</span>
@@ -588,7 +164,9 @@
 												<p>Additional information</p>
 											</div>
 										</div>
-									</li>
+									</li> -->
+
+									<!-- step 5 -->
 									<li>
 										<div class="profile-step">
 											<span class="dot-active mb-2">
@@ -602,66 +180,79 @@
 									</li>
 								</ul>
 							</div>
-							<div class="initialization-form-set">
+							<form action="course_action.php" method="POST" class="initialization-form-set" enctype="multipart/form-data">
+
 								<fieldset class="form-inner wizard-form-card" id="first">
 									<div class="title">
 										<h5>Basic Information</h5>
 									</div>
 									<div class="row">
+										<!-- title -->
 										<div class="col-md-12">
 											<div class="input-block">
 												<label class="form-label">Course Title<span
 														class="text-danger ms-1">*</span></label>
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="title">
 											</div>
 										</div>
+
+										<!-- category -->
 										<div class="col-md-4">
 											<div class="input-block">
 												<label class="form-label">Course Category<span
 														class="text-danger ms-1">*</span></label>
-												<select class="select form-control">
-													<option>Select</option>
-													<option>Management</option>
-													<option>IT & Softwares</option>
-													<option>Marketing</option>
-													<option>Finance</option>
-													<option>Productivity</option>
+												<select class="select form-control" name="category_id">
+													<option value="">Select</option>
+													<option value="1">Management</option>
+													<option value="2">IT & Softwares</option>
+													<option value="3">Marketing</option>
+													<!-- <option value="Finance">Finance</option>
+													<option value="Productivity">Productivity</option> -->
 												</select>
 											</div>
 										</div>
+
+										<!-- course level -->
 										<div class="col-md-4">
 											<div class="input-block">
 												<label class="form-label">Course Level<span
 														class="text-danger ms-1">*</span></label>
-												<select class="select form-control">
-													<option>Select</option>
-													<option>Beginner </option>
-													<option>Intermediate</option>
-													<option>Advanced</option>
-													<option>Expert</option>
+												<select class="select form-control" name="level">
+													<option value="">Select</option>
+													<option value="Beginner">Beginner </option>
+													<option value="Intermediate">Intermediate</option>
+													<option value="Advanced">Advanced</option>
+													<!-- <option value="Expert">Expert</option> -->
 												</select>
 											</div>
 										</div>
+
+										<!-- language -->
 										<div class="col-md-4">
 											<div class="input-block">
 												<label class="form-label">Language<span
 														class="text-danger ms-1">*</span></label>
-												<select class="select form-control">
-													<option>Select</option>
-													<option>French </option>
-													<option>German</option>
-													<option>Arabic</option>
+												<select class="select form-control" name="language">
+													<option value="">Select</option>
+													<option value="English">English</option>
+													<option value="Hindi">Hindi</option>
+													<option value="Bengali">Bengali</option>
+													<option value="French">French </option>
+													<option value="German">German</option>
+													<option value="Arabic">Arabic</option>
 												</select>
 											</div>
 										</div>
-										<div class="col-md-6">
+
+										<!-- <div class="col-md-6">
 											<div class="input-block">
 												<label class="form-label">Max Number of Students<span
 														class="text-danger ms-1">*</span></label>
 												<input type="text" class="form-control student-count">
 											</div>
-										</div>
-										<div class="col-md-6">
+										</div> -->
+
+										<!-- <div class="col-md-6">
 											<div class="input-block">
 												<label class="form-label">Public / Private Course<span
 														class="text-danger ms-1">*</span></label>
@@ -671,22 +262,28 @@
 													<option>Public</option>
 												</select>
 											</div>
-										</div>
+										</div> -->
+
+										<!-- short description -->
 										<div class="col-md-12">
 											<div class="input-block">
 												<label class="form-label">Short Description<span
 														class="text-danger ms-1">*</span></label>
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="short_description">
 											</div>
 										</div>
+
+										<!-- course description -->
 										<div class="col-md-12">
 											<div class="input-block">
 												<label class="form-label">Course Description<span
 														class="text-danger ms-1">*</span></label>
-												<div class="summernote"></div>
+												<textarea class="summernote" name="description"></textarea>
 											</div>
 										</div>
-										<div class="col-md-6">
+
+										<!-- learning -->
+										<!-- <div class="col-md-6">
 											<div class="bg-light border p-4 rounded-3">
 												<h6 class="mb-2">What will students learn in your course?</h6>
 												<div class="input-block" id="input-block">
@@ -705,13 +302,15 @@
 													</a>
 												</div>
 											</div>
-										</div>
-										<div class="col-md-6">
+										</div> -->
+
+										<!-- requirements-->
+										<!-- <div class="col-md-6">
 											<div class="bg-light border	 p-4 rounded-3">
 												<h6 class="mb-2">Requirements</h6>
 												<div class="input-block">
 													<div class="d-flex align-items-center add-new-input">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="">
 														<a href="javascript:void(0);" class="link-trash"><i
 																class="isax isax-trash"></i></a>
 													</div>
@@ -723,15 +322,17 @@
 													</a>
 												</div>
 											</div>
-										</div>
-										<div class="col-md-6">
+										</div> -->
+
+										<!-- check toggle -->
+										<!-- <div class="col-md-6">
 											<div class="form-check form-switch form-check-md mb-0 mt-3">
 												<input class="form-check-input form-checked-success" type="checkbox"
-													id="checkFeature" checked="">
+													id="checkFeature" checked="" name="">
 												<label class="form-check-label" for="checkFeature">Check this for
 													featured course</label>
 											</div>
-										</div>
+										</div> -->
 
 									</div>
 									<div
@@ -748,6 +349,8 @@
 										<p>Intro Course overview provider type. (.mp4, YouTube, Vimeo etc.)</p>
 									</div>
 									<div class="row">
+
+										<!-- course thumbnail -->
 										<div class="col-md-12">
 											<div class="input-block">
 												<div class="row align-items-center">
@@ -762,16 +365,18 @@
 													<div class="col-md-2 d-grid">
 														<label for="file-upload"
 															class="file-upload-btn text-center">Upload File</label>
-														<input type="file" id="file-upload" name="file">
+														<input type="file" id="file-upload" name="thumbnail">
 													</div>
 												</div>
 											</div>
 										</div>
+
+										<!--  -->
 										<div class="col-md-12">
 											<div class="upload-img-section d-flex align-items-center justify-content-center"
 												id="upload-img-section">
 												<input type="file" id="upload-img-input" style="display: none;"
-													accept="image/jpeg, image/png, image/gif, image/webp">
+													accept="image/jpeg, image/png, image/gif, image/webp" name="thumbnail">
 												<div class="upload-content">
 													<span class="d-flex align-items-center justify-content-center mb-1">
 														<i
@@ -784,6 +389,8 @@
 											</div>
 											<hr class="mt-4 mb-4">
 										</div>
+
+										<!-- course video -->
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-4">
@@ -802,7 +409,7 @@
 													<div class="input-block-link">
 														<label class="form-label">&nbsp;</label>
 														<input type="text" class="form-control"
-															placeholder="External URL Link">
+															placeholder="External URL Link" name="intro_video">
 													</div>
 												</div>
 											</div>
@@ -812,7 +419,7 @@
 												<a href="https://www.youtube.com/embed/1trvO6dqQUI" id="openVideoBtn"
 													target="_blank">
 													<img class="img-fluid rounded"
-														src="assets/img/course/add-course-1.jpg" alt="img">
+														src="../assets/img/course/add-course-1.jpg" alt="img">
 													<div class="play-icon">
 														<i class="fa-solid fa-play"></i>
 													</div>
@@ -839,7 +446,9 @@
 										</div>
 									</div>
 								</fieldset>
-								<fieldset class="form-inner wizard-form-card">
+
+								<!-- curriculum section -->
+								<!-- <fieldset class="form-inner wizard-form-card">
 									<div class="title">
 										<div class="row align-items-center row-gap-2">
 											<div class="col-md-6">
@@ -1041,8 +650,10 @@
 													class="isax isax-arrow-right-3 ms-1"></i></a>
 										</div>
 									</div>
-								</fieldset>
-								<fieldset class="form-inner wizard-form-card">
+								</fieldset> -->
+
+								<!-- course faq's section -->
+								<!-- <fieldset class="form-inner wizard-form-card">
 									<div class="title">
 										<div class="row align-items-center row-gap-3">
 											<div class="col-md-9">
@@ -1193,7 +804,9 @@
 													class="isax isax-arrow-right-3 ms-1"></i></a>
 										</div>
 									</div>
-								</fieldset>
+								</fieldset> -->
+
+								<!-- course pricing section -->
 								<fieldset class="form-inner wizard-form-card">
 									<div>
 										<div class="d-flex align-items-center mb-3">
@@ -1207,9 +820,9 @@
 										</div>
 										<div class="input-block mb-2">
 											<label class="form-label">Course Price ($)</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" name="price">
 										</div>
-										<div class="d-flex align-items-center mb-3">
+										<!-- <div class="d-flex align-items-center mb-3">
 											<div class="form-check form-check-md d-flex align-items-center">
 												<input class="form-check-input" type="checkbox" value=""
 													id="flexCheckChecked2">
@@ -1217,13 +830,13 @@
 													Check if this course has discount
 												</label>
 											</div>
-										</div>
-										<div class="input-block">
+										</div> -->
+										<!-- <div class="input-block">
 											<label class="form-label">Discount Price ($)</label>
 											<input type="text" class="form-control mb-1">
 											<span>This course has 0% Discount</span>
-										</div>
-										<div class="mb-4">
+										</div> -->
+										<!-- <div class="mb-4">
 											<label class="form-label mb-1">Expiry Period</label>
 											<div class="d-flex align-items-center ">
 												<div class="form-check me-3">
@@ -1241,10 +854,10 @@
 													</label>
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<div class="input-block">
 											<label class="form-label">Number of month</label>
-											<input type="text" class="form-control mb-1">
+											<input type="text" class="form-control mb-1" name="course_duration">
 											<span>After purchase, students can access the course until your selected
 												time.</span>
 										</div>
@@ -1255,21 +868,27 @@
 													class="isax isax-arrow-left-2 me-1"></i>Prev</a>
 										</div>
 										<div class="btn-left">
-											<a href="javascript:void(0);" class="btn btn-secondary main-btn next_btns"
-												data-bs-toggle="modal" data-bs-target="#success">Submit Course</a>
+											<!-- <a href="javascript:void(0);" class="btn btn-secondary main-btn next_btns"
+												data-bs-toggle="modal" data-bs-target="#success">
+												Submit Course
+											</a> -->
+
+											<button type="submit" class="btn btn-secondary main-btn">
+												Submit Course <i class="fa-solid fa-arrow-right-long"></i>	
+											</button>
 										</div>
 									</div>
 								</fieldset>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- /Course watch -->
+		<!-- Course watch -->
 
-		<!-- Add topic -->
-		<div class="modal fade" id="add-topic">
+		<!--================================ Add topic ================================-->
+		<!-- <div class="modal fade" id="add-topic">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -1293,11 +912,11 @@
 					</form>
 				</div>
 			</div>
-		</div>
-		<!-- /Add topic -->
+		</div> -->
+		<!--================================ Add topic ================================-->
 
 		<!-- Add lesson -->
-		<div class="modal fade" id="add-lesson">
+		<!-- <div class="modal fade" id="add-lesson">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -1345,11 +964,11 @@
 					</form>
 				</div>
 			</div>
-		</div>
-		<!-- /Add lesson -->
+		</div> -->
+		<!-- Add lesson -->
 
 		<!-- Add Faq -->
-		<div class="modal fade" id="add-faq">
+		<!-- <div class="modal fade" id="add-faq">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -1393,8 +1012,8 @@
 					</form>
 				</div>
 			</div>
-		</div>
-		<!-- /Add Faq -->
+		</div> -->
+		<!-- Add Faq -->
 
 		<!-- success -->
 		<div class="modal fade modal-default" id="success">
@@ -1419,11 +1038,12 @@
 		</div>
 		<!-- /success -->
 
+
 		<!-- Footer -->
 		<footer class="footer">
 			<div class="footer-bg">
-				<img src="assets/img/bg/footer-bg-01.png" class="footer-bg-1" alt="">
-				<img src="assets/img/bg/footer-bg-02.png" class="footer-bg-2" alt="">
+				<img src="../assets/img/bg/footer-bg-01.png" class="footer-bg-1" alt="">
+				<img src="../assets/img/bg/footer-bg-02.png" class="footer-bg-2" alt="">
 			</div>
 			<div class="footer-top">
 				<div class="container">
@@ -1431,13 +1051,13 @@
 						<div class="col-lg-4">
 							<div class="footer-about">
 								<div class="footer-logo">
-									<img src="assets/img/logo.svg" alt="">
+									<img src="../assets/img/logo.svg" alt="">
 								</div>
 								<p>Platform designed to help organizations, educators, and learners manage, deliver, and
 									track learning and training activities.</p>
 								<div class="d-flex align-items-center">
-									<a href="#" class="me-2"><img src="assets/img/icon/appstore.svg" alt=""></a>
-									<a href="#"><img src="assets/img/icon/googleplay.svg" alt=""></a>
+									<a href="#" class="me-2"><img src="../assets/img/icon/appstore.svg" alt=""></a>
+									<a href="#"><img src="../assets/img/icon/googleplay.svg" alt=""></a>
 								</div>
 							</div>
 						</div>
@@ -1481,15 +1101,15 @@
 										</div>
 										<div class="footer-contact-info">
 											<div class="footer-address d-flex align-items-center">
-												<img src="assets/img/icon/icon-20.svg" alt="Img" class="img-fluid me-2">
+												<img src="../assets/img/icon/icon-20.svg" alt="Img" class="img-fluid me-2">
 												<p> 3556 Beech Street, San Francisco,<br> California, CA 94108 </p>
 											</div>
 											<div class="footer-address d-flex align-items-center">
-												<img src="assets/img/icon/icon-19.svg" alt="Img" class="img-fluid me-2">
+												<img src="../assets/img/icon/icon-19.svg" alt="Img" class="img-fluid me-2">
 												<p>dreamslms@example.com</p>
 											</div>
 											<div class="footer-address d-flex align-items-center">
-												<img src="assets/img/icon/icon-21.svg" alt="Img" class="img-fluid me-2">
+												<img src="../assets/img/icon/icon-21.svg" alt="Img" class="img-fluid me-2">
 												<p>+19 123-456-7890</p>
 											</div>
 										</div>
@@ -1522,29 +1142,34 @@
 			</div>
 		</footer>
 		<!-- /Footer -->
+
+
 	</div>
-	<!-- /Main Wrapper -->
+	<!--============================================  Main Wrapper ============================================ -->
+
 
 	<!-- jQuery -->
-	<script src="assets/js/jquery-3.7.1.min.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/js/jquery-3.7.1.min.js"></script>
 
 	<!-- Bootstrap Core JS -->
-	<script src="assets/js/bootstrap.bundle.min.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Select2 JS -->
-	<script src="assets/plugins/select2/js/select2.min.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/plugins/select2/js/select2.min.js"></script>
 
 	<!-- Bootstrap Tagsinput JS -->
-	<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
 	<!-- Summernote JS -->
-	<script src="assets/plugins/summernote/summernote-lite.min.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/plugins/summernote/summernote-lite.min.js"></script>
 
 	<!-- Custom JS -->
-	<script src="assets/js/script.js" type="75e411c1426dae3e3f14d912-text/javascript"></script>
+	<script src="../assets/js/script.js"></script>
 
-<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="75e411c1426dae3e3f14d912-|49" defer></script></body>
+	<!-- <script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="75e411c1426dae3e3f14d912-|49" defer></script> -->
 
 
-<!-- Mirrored from dreamslms.dreamstechnologies.com/html/template/add-course.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jun 2026 20:51:00 GMT -->
+</body>
+
+
 </html>

@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION['user_id'])) {
+	header("Location: ../auth/login.php");
+	exit();
+}
+
+// if ($_SESSION['user_type'] != 3) {
+	
+// 	header("Location: ../index.php");
+// 	exit();
+// }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,80 +29,8 @@
 	<!-- Main Wrapper -->
 	<div class="main-wrapper">
 
-		<!-- Header Topbar-->
-		<div class="header-topbar text-center">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="d-flex align-items-center ">
-							<p class="d-flex align-items-center fw-medium fs-14 mb-2 me-3"><i
-									class="isax isax-location me-2"></i>1442 Crosswind Drive Madisonville</p>
-							<p class="d-flex align-items-center fw-medium fs-14 mb-2"><i
-									class="isax isax-call-calling5 me-2"></i>+1 45887 77874</p>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="d-flex align-items-center justify-content-end">
-							<div class="dropdown flag-dropdown mb-2 me-3">
-								<a href="javascript:void(0);" class="dropdown-toggle d-inline-flex align-items-center"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
-								</a>
-								<ul class="dropdown-menu p-2 mt-2" style="">
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center"
-											href="javascript:void(0);">
-											<img src="assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center"
-											href="javascript:void(0);">
-											<img src="assets/img/flags/arab-flag.svg" class="me-2" alt="flag">ARA
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item rounded d-flex align-items-center"
-											href="javascript:void(0);">
-											<img src="assets/img/flags/france-flag.svg" class="me-2" alt="flag">FRE
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="dropdown mb-2 me-3">
-								<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown"
-									aria-expanded="false">
-									USD
-								</a>
-								<ul class="dropdown-menu p-2 mt-2">
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">USD</a></li>
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">YEN</a></li>
-									<li><a class="dropdown-item rounded" href="javascript:void(0);">EURO</a></li>
-								</ul>
-							</div>
-							<ul class="social-icon d-flex align-items-center mb-2">
-								<li class="me-2">
-									<a href="#" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-								</li>
-								<li class="me-2">
-									<a href="#" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
-								</li>
-								<li class="me-2">
-									<a href="#" aria-label="twitter"><i class="fa-brands fa-x-twitter"></i></a>
-								</li>
-								<li class="me-2">
-									<a href="#" aria-label="youtube"><i class="fa-brands fa-youtube"></i></a>
-								</li>
-								<li>
-									<a href="#" aria-label="linkedin"><i class="fa-brands fa-linkedin"></i></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Header Topbar-->
+		<!--==== topbar ====-->
+		<?php @include('../includes/topbar.php'); ?>
 
 		<!-- Header -->
 		<header class="header-two">
@@ -1113,128 +1058,10 @@
 		</div>
 	</div>
 
-	<!-- Footer -->
-	<footer class="footer">
-		<div class="footer-bg">
-			<img src="assets/img/bg/footer-bg-01.png" class="footer-bg-1" alt="">
-			<img src="assets/img/bg/footer-bg-02.png" class="footer-bg-2" alt="">
-		</div>
-		<div class="footer-top">
-			<div class="container">
-				<div class="row row-gap-4">
-					<div class="col-lg-4">
-						<div class="footer-about">
-							<div class="footer-logo">
-								<img src="assets/img/logo.svg" alt="">
-							</div>
-							<p>Platform designed to help organizations, educators, and learners manage, deliver, and
-								track learning and training activities.</p>
-							<div class="d-flex align-items-center">
-								<a href="#" class="me-2"><img src="assets/img/icon/appstore.svg" alt=""></a>
-								<a href="#"><img src="assets/img/icon/googleplay.svg" alt=""></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-8">
-						<div class="row row-gap-4">
-							<div class="col-lg-3">
-								<div class="footer-widget footer-menu">
-									<h5 class="footer-title">For Instructor</h5>
-									<ul>
-										<li><a href="course-grid.html">Search Mentors</a></li>
-										<li><a href="login.html">Login</a></li>
-										<li><a href="register.html">Register</a></li>
-										<li><a href="course-list.html">Booking</a></li>
-										<li><a href="student-dashboard.html">Students Dashboard</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<div class="footer-widget footer-menu">
-									<h5 class="footer-title">For Student</h5>
-									<ul>
-										<li><a href="javascript:void(0);">Appointments</a></li>
-										<li><a href="instructor-message.html">Chat</a></li>
-										<li><a href="login.html">Login</a></li>
-										<li><a href="register.html">Register</a></li>
-										<li><a href="instructor-dashboard.html">Instructor Dashboard</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<div class="footer-widget footer-contact">
-									<h5 class="footer-title">Newsletter</h5>
-									<div class="subscribe-input">
-										<form action="javascript:void(0);">
-											<input type="email" class="form-control"
-												placeholder="Enter your Email Address">
-											<button type="submit"
-												class="btn btn-primary btn-sm inline-flex align-items-center"><i
-													class="isax isax-send-2 me-1"></i>Subscribe</button>
-										</form>
-									</div>
-									<div class="footer-contact-info">
-										<div class="footer-address d-flex align-items-center">
-											<img src="assets/img/icon/icon-20.svg" alt="Img" class="img-fluid me-2">
-											<p> 3556 Beech Street, San Francisco,<br> California, CA 94108 </p>
-										</div>
-										<div class="footer-address d-flex align-items-center">
-											<img src="assets/img/icon/icon-19.svg" alt="Img" class="img-fluid me-2">
-											<p>dreamslms@example.com</p>
-										</div>
-										<div class="footer-address d-flex align-items-center">
-											<img src="assets/img/icon/icon-21.svg" alt="Img" class="img-fluid me-2">
-											<p>+19 123-456-7890</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="row row-gap-2">
-					<div class="col-md-6">
-						<div class="text-center text-md-start">
-							<p class="text-white">Copyright &copy; 2026 DreamsLMS. All rights reserved.</p>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div>
-							<ul
-								class="d-flex align-items-center justify-content-center justify-content-md-end footer-link">
-								<li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
-								<li><a href="privacy-policy.html">Privacy Policy</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- /Footer -->
+	<!--======================= footer =======================-->
+	<?php @include('../includes/footer.php') ?>
 
 	</div>
-	<!-- /Main Wrapper -->
+	<!--============================================ Main Wrapper ============================================-->
 
-	<!-- jQuery -->
-	<script src="assets/js/jquery-3.7.1.min.js" type="6c438f96e65a5e0ea55aa7f6-text/javascript"></script>
-
-	<!-- Bootstrap Core JS -->
-	<script src="assets/js/bootstrap.bundle.min.js" type="6c438f96e65a5e0ea55aa7f6-text/javascript"></script>
-
-	<!-- Sticky Sidebar JS -->
-	<script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js" type="6c438f96e65a5e0ea55aa7f6-text/javascript"></script>
-	<script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js" type="6c438f96e65a5e0ea55aa7f6-text/javascript"></script>
-
-	<!-- Custom JS -->
-	<script src="assets/js/script.js" type="6c438f96e65a5e0ea55aa7f6-text/javascript"></script>
-
-<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="6c438f96e65a5e0ea55aa7f6-|49" defer></script></body>
-
-
-<!-- Mirrored from dreamslms.dreamstechnologies.com/html/template/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jun 2026 20:50:43 GMT -->
 </html>

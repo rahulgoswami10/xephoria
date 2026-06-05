@@ -87,7 +87,7 @@
 			<!-- Header -->
 			<header class="header">
 				<?php
-					@include('includes/navbar.php')
+					@include('includes/navbar_old.php');
 				?>
 			</header>
 			<!-- /Header -->

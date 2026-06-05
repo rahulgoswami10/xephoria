@@ -18,7 +18,7 @@
 	<link rel="apple-touch-icon" href="../assets/img/apple-icon.png">
 
 	<!-- Theme Settings Js -->
-	<script src="../assets/js/theme-script.js" type="bedda57eabc3b2d01c6d82dd-text/javascript"></script>
+	<script src="../assets/js/theme-script.js"></script>
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -53,5 +53,11 @@
 
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="../assets/css/style.css">
+
+	<!-- Bootstrap Tagsinput CSS -->
+	<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+
+	<!-- Summernote JS -->
+	<link rel="stylesheet" href="assets/plugins/summernote/summernote-lite.min.css">
 
 </head>
