@@ -37,7 +37,7 @@ session_start();
 				<ul class="main-nav">
 					<li class="has-submenu megamenu">
 						<a href="#">Home <i class="isax isax-add"></i></a>
-						<ul class="submenu mega-submenu">
+						<!-- <ul class="submenu mega-submenu">
 							<li>
 								<div class="megamenu-wrapper">
 									<div class="row">
@@ -148,7 +148,7 @@ session_start();
 									</div>
 								</div>
 							</li>
-						</ul>
+						</ul> -->
 					</li>
 					<li class="has-submenu">
 						<a href="#">Courses <i class="isax isax-add"></i></a>

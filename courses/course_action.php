@@ -157,15 +157,48 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // upload path
         // $upload_path = "../uploads/course_thumbnails/" . $thumbnail_name;
-        $upload_path = "../" . $thumbnail_name;
+        // $upload_path = "../" . $thumbnail_name;
 
 
         // move file
         // move_uploaded_file($file_tmp, $upload_path);
 
-        if (!move_uploaded_file($file_tmp, $upload_path)) {
+        // if (!move_uploaded_file($file_tmp, $upload_path)) {
 
-            echo "Failed to upload image!";
+        //     echo "Failed to upload image!";
+        //     exit();
+        // }
+
+
+
+        // upload directory
+        $upload_dir = "../uploads/course_thumbnails/";
+
+
+        // create folder if not exists
+        if (!file_exists($upload_dir)) {
+
+            mkdir($upload_dir, 0777, true);
+        }
+
+
+        // final upload path
+        $upload_path = $upload_dir . $thumbnail_name;
+
+
+        // move file
+        if (move_uploaded_file($file_tmp, $upload_path)) {
+
+            echo "Image uploaded successfully";
+
+        } else {
+
+            echo "Image upload failed";
+
+            echo "<br><br>";
+
+            echo "Upload Path : " . $upload_path;
+
             exit();
         }
     }

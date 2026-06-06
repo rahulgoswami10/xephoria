@@ -1,6 +1,9 @@
 
 <?php
 
+require_once('../db/connection.php');
+
+
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -15,6 +18,34 @@ if ($_SESSION['user_type'] != 2) {
 }
 
 ?>
+
+
+<?php
+
+
+$instructor_id = $_SESSION['user_id'];
+
+$query = "
+
+SELECT 
+    courses.*,
+    categories.category_name
+
+FROM courses
+
+LEFT JOIN categories
+ON courses.category_id = categories.id
+
+WHERE courses.instructor_id = '$instructor_id'
+
+ORDER BY courses.id DESC
+
+";
+
+$result = mysqli_query($conn, $query);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,6 +81,9 @@ if ($_SESSION['user_type'] != 2) {
 	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
 
 	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 
 	<!-- Feather CSS -->
 	<link rel="stylesheet" href="../assets/css/feather.css">
@@ -111,100 +145,269 @@ if ($_SESSION['user_type'] != 2) {
 			<div class="container">
 
 
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">My Courses</h5>
+				<div class="card border-0 shadow-sm">
 
-                        <a href="add_course.php" class="btn btn-primary">
-                            <i class="fa-solid fa-plus me-1"></i>
-                            Add New Course
-                        </a>
-                    </div>
+					<!-- card header -->
+					<div class="card-header bg-white d-flex justify-content-between align-items-center">
 
-                    <div class="card-body">
+						<div>
+							<h4 class="mb-1">My Courses</h4>
+							<p class="text-muted mb-0">
+								Manage all your uploaded courses
+							</p>
+						</div>
 
-                        <!-- Search -->
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" placeholder="Search Course">
-                            </div>
-                        </div>
+						<a href="add_course.php" class="btn btn-primary">
+							<i class="fa-solid fa-plus me-1"></i>
+							Add Course
+						</a>
 
-                        <!-- Table -->
-                        <div class="table-responsive">
-                            <table class="table align-middle">
+					</div>
 
-                                <thead>
-                                    <tr>
-                                        <th>Thumbnail</th>
-                                        <th>Course Name</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th>Created</th>
-                                        <th width="180">Action</th>
-                                    </tr>
-                                </thead>
 
-                                <tbody>
+					<!-- card body -->
+					<div class="card-body">
 
-                                    <tr>
-                                        <td>
-                                            <img src="../uploads/course_thumbnails/1780692414_9185.jpg"
-                                                class="rounded"
-                                                width="80">
-                                        </td>
 
-                                        <td>
-                                            <h6 class="mb-1">Programming With Java</h6>
-                                            <small class="text-muted">
-                                                Beginner Level
-                                            </small>
-                                        </td>
+						<!-- success message -->
+						<?php if(isset($_GET['success'])) { ?>
 
-                                        <td>Programming</td>
+							<div class="alert alert-success alert-dismissible fade show">
 
-                                        <td>
-                                            ₹2000
-                                        </td>
+								Course added successfully.
 
-                                        <td>
-                                            <span class="badge bg-warning">
-                                                Pending
-                                            </span>
-                                        </td>
+								<button type="button"
+									class="btn-close"
+									data-bs-dismiss="alert">
+								</button>
 
-                                        <td>
-                                            06 Jun 2026
-                                        </td>
+							</div>
 
-                                        <td>
+						<?php } ?>
 
-                                            <a href="#"
-                                                class="btn btn-sm btn-info text-white">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </a>
 
-                                            <a href="#"
-                                                class="btn btn-sm btn-success">
-                                                <i class="fa-solid fa-pen"></i>
-                                            </a>
+						<!-- table -->
+						<div class="table-responsive">
 
-                                            <a href="#"
-                                                class="btn btn-sm btn-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </a>
+							<table class="table align-middle">
 
-                                        </td>
-                                    </tr>
+								<thead>
+									<tr>
+										<th>Thumbnail</th>
+										<th>Course</th>
+										<th>Category</th>
+										<th>Price</th>
+										<th>Status</th>
+										<th>Duration</th>
+										<th>Created</th>
+										<th width="180">Action</th>
+									</tr>
+								</thead>
 
-                                </tbody>
+								<tbody>
 
-                            </table>
-                        </div>
+									<?php
 
-                    </div>
-                </div>
+									if(mysqli_num_rows($result) > 0)
+									{
+
+										while($row = mysqli_fetch_assoc($result))
+										{
+
+									?>
+
+									<tr>
+
+										<!-- thumbnail -->
+										<td>
+
+											<?php
+
+											if(!empty($row['thumbnail']))
+											{
+
+											?>
+
+												<img src="../uploads/course_thumbnails/<?php echo $row['thumbnail']; ?>"
+													width="90"
+													height="60"
+													class="rounded object-fit-cover">
+
+											<?php
+
+											}
+											else
+											{
+
+											?>
+
+												<img src="../assets/img/course/course-01.jpg"
+													width="90"
+													height="60"
+													class="rounded">
+
+											<?php } ?>
+
+										</td>
+
+
+										<!-- course -->
+										<td>
+
+											<h6 class="mb-1">
+												<?php echo $row['title']; ?>
+											</h6>
+
+											<small class="text-muted">
+												<?php echo $row['level']; ?>
+											</small>
+
+										</td>
+
+
+										<!-- category -->
+										<td>
+											<?php echo $row['category_name']; ?>
+										</td>
+
+
+										<!-- price -->
+										<td>
+
+											<?php
+
+											if($row['is_free'] == 1)
+											{
+												echo '<span class="badge bg-success">Free</span>';
+											}
+											else
+											{
+												echo '₹' . $row['price'];
+											}
+
+											?>
+
+										</td>
+
+
+										<!-- status -->
+										<td>
+
+											<?php
+
+											if($row['status'] == 'published')
+											{
+												echo '<span class="badge bg-success">Published</span>';
+											}
+											elseif($row['status'] == 'pending')
+											{
+												echo '<span class="badge bg-warning">Pending</span>';
+											}
+											else
+											{
+												echo '<span class="badge bg-secondary">Draft</span>';
+											}
+
+											?>
+
+										</td>
+
+
+										<!-- duration -->
+										<td>
+											<?php echo $row['course_duration']; ?> Months
+										</td>
+
+
+										<!-- created -->
+										<td>
+
+											<?php
+
+											echo date("d M Y", strtotime($row['created_at']));
+
+											?>
+
+										</td>
+
+
+										<!-- actions -->
+										<td>
+
+											<a href="view_course.php?id=<?php echo $row['id']; ?>"
+												class="btn btn-sm btn-info text-white" title="view course">
+
+												<i class="fa-solid fa-eye"></i>
+
+											</a>
+
+
+											<a href="edit_course.php?id=<?php echo $row['id']; ?>"
+												class="btn btn-sm btn-success" title="edit course">
+
+												<i class="fa-solid fa-pen"></i>
+
+											</a>
+
+
+											<a href="delete_course.php?id=<?php echo $row['id']; ?>"
+												class="btn btn-sm btn-danger"
+												onclick="return confirm('Are you sure you want to delete this course?')" title="delete course">
+
+												<i class="fa-solid fa-trash"></i>
+
+											</a>
+
+										</td>
+
+									</tr>
+
+									<?php
+
+										}
+
+									}
+									else
+									{
+
+									?>
+
+									<tr>
+
+										<td colspan="8" class="text-center py-5">
+
+											<img src="../assets/img/empty.svg"
+												width="120"
+												class="mb-3">
+
+											<h5>No Courses Found</h5>
+
+											<p class="text-muted">
+												You have not added any courses yet.
+											</p>
+
+											<a href="add_course.php"
+												class="btn btn-primary">
+
+												Add Your First Course
+
+											</a>
+
+										</td>
+
+									</tr>
+
+									<?php } ?>
+
+								</tbody>
+
+							</table>
+
+						</div>
+
+					</div>
+
+				</div>
 
 
 			</div>
@@ -212,7 +415,7 @@ if ($_SESSION['user_type'] != 2) {
 	
 
 		<!-- success -->
-		<div class="modal fade modal-default" id="success">
+		<!-- <div class="modal fade modal-default" id="success">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-body p-4">
@@ -231,7 +434,7 @@ if ($_SESSION['user_type'] != 2) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- /success -->
 
 
