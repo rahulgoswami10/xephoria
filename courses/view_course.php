@@ -366,14 +366,14 @@ $course = mysqli_fetch_assoc($result);
                                         Edit Course
                                     </a>
 
-                                    <a 
+                                    <!-- <a 
                                         href="delete_course.php?id=<?php echo $course['id']; ?>" 
                                         class="btn btn-danger"
                                         onclick="return confirm('Are you sure you want to delete this course?')"
                                     >
                                         <i class="fa-solid fa-trash me-2"></i>
                                         Delete Course
-                                    </a>
+                                    </a> -->
 
                                     <a 
                                         href="manage_courses.php" 

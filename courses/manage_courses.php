@@ -174,7 +174,22 @@ $result = mysqli_query($conn, $query);
 
 							<div class="alert alert-success alert-dismissible fade show">
 
-								Course added successfully.
+								<?php
+
+									if($_GET['success'] == 'added')
+									{
+										echo "Course added successfully.";
+									}
+									elseif($_GET['success'] == 'deleted')
+									{
+										echo "Course deleted successfully.";
+									}
+									elseif($_GET['success'] == 'updated')
+									{
+										echo "Course updated successfully.";
+									}
+
+								?>
 
 								<button type="button"
 									class="btn-close"

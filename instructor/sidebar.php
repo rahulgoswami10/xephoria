@@ -14,7 +14,7 @@
                             class="fa-solid fa-user me-2"></i>My Profile</a>
                 </li>
                 <li>
-                    <a href="instructor-course.html" class="d-inline-flex align-items-center"><i
+                    <a href="../courses/manage_courses.php" class="d-inline-flex align-items-center"><i
                             class="isax isax-teacher5 me-2"></i>Courses</a>
                 </li>
                 <li>
