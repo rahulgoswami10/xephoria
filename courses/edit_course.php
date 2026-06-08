@@ -22,27 +22,49 @@ if ($_SESSION['user_type'] != 2) {
 
 <?php
 
+// GET COURSE ID
+if (!isset($_GET['id'])) {
+
+    header("Location: manage_courses.php");
+    exit();
+}
+
+
+$course_id = intval($_GET['id']);
+
 
 $instructor_id = $_SESSION['user_id'];
 
-$query = "
+$query = "SELECT * FROM courses 
+          WHERE id = ? 
+          AND instructor_id = ?";
 
-SELECT 
-    courses.*,
-    categories.category_name
+$stmt = mysqli_prepare($conn, $query);
 
-FROM courses
+mysqli_stmt_bind_param($stmt, "ii", $course_id, $instructor_id);
 
-LEFT JOIN categories
-ON courses.category_id = categories.id
+mysqli_stmt_execute($stmt);
 
-WHERE courses.instructor_id = '$instructor_id'
+$result = mysqli_stmt_get_result($stmt);
 
-ORDER BY courses.id DESC
+$course = mysqli_fetch_assoc($result);
 
-";
 
-$result = mysqli_query($conn, $query);
+// course not found
+if (!$course) {
+
+    header("Location: manage_courses.php");
+    exit();
+}
+
+
+// ============================
+// GET CATEGORIES
+// ============================
+
+$category_query = "SELECT * FROM categories ORDER BY category_name ASC";
+
+$category_result = mysqli_query($conn, $category_query);
 
 ?>
 
@@ -129,7 +151,7 @@ $result = mysqli_query($conn, $query);
 						<h2 class="breadcrumb-title mb-2">Edit Course</h2>
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb justify-content-center mb-0">
-								<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+								<li class="breadcrumb-item"><a href="../index.php">Home</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Edit Course</li>
 							</ol>
 						</nav>
@@ -142,14 +164,316 @@ $result = mysqli_query($conn, $query);
 
 		<!--  -->
 		<div class="content">
+
 			<div class="container">
 
 
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-10">
+
+                        <div class="card border-0 shadow-sm">
+
+                            <div class="card-header bg-white">
+
+                                <h4 class="mb-1">
+                                    Edit Course
+                                </h4>
+
+                                <p class="text-muted mb-0">
+                                    Update your course information
+                                </p>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <form action="editaction_course.php"
+                                    method="POST"
+                                    enctype="multipart/form-data">
+
+
+                                    <!-- hidden id -->
+                                    <input type="hidden"
+                                        name="course_id"
+                                        value="<?php echo $course['id']; ?>">
 
 
 
-			</div>
-		</div>
+                                    <div class="row">
+
+
+                                        <!-- title -->
+                                        <div class="col-md-12 mb-4">
+
+                                            <label class="form-label">
+                                                Course Title
+                                            </label>
+
+                                            <input type="text"
+                                                class="form-control"
+                                                name="title"
+                                                value="<?php echo htmlspecialchars($course['title']); ?>"
+                                                required>
+
+                                        </div>
+
+
+
+                                        <!-- category -->
+                                        <div class="col-md-6 mb-4">
+
+                                            <label class="form-label">
+                                                Category
+                                            </label>
+
+                                            <select class="form-control"
+                                                    name="category_id"
+                                                    required>
+
+                                                <option value="">
+                                                    Select Category
+                                                </option>
+
+                                                <?php
+                                                while($category = mysqli_fetch_assoc($category_result))
+                                                {
+                                                ?>
+
+                                                <option value="<?php echo $category['id']; ?>"
+
+                                                    <?php
+                                                    if($course['category_id'] == $category['id'])
+                                                    {
+                                                        echo "selected";
+                                                    }
+                                                    ?>
+
+                                                >
+
+                                                    <?php echo $category['category_name']; ?>
+
+                                                </option>
+
+                                                <?php } ?>
+
+                                            </select>
+
+                                        </div>
+
+
+
+                                        <!-- level -->
+                                        <div class="col-md-6 mb-4">
+
+                                            <label class="form-label">
+                                                Course Level
+                                            </label>
+
+                                            <select class="form-control"
+                                                    name="level"
+                                                    required>
+
+                                                <option value="Beginner"
+                                                    <?php if($course['level'] == 'Beginner') echo 'selected'; ?>>
+                                                    Beginner
+                                                </option>
+
+                                                <option value="Intermediate"
+                                                    <?php if($course['level'] == 'Intermediate') echo 'selected'; ?>>
+                                                    Intermediate
+                                                </option>
+
+                                                <option value="Advanced"
+                                                    <?php if($course['level'] == 'Advanced') echo 'selected'; ?>>
+                                                    Advanced
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+
+
+                                        <!-- language -->
+                                        <div class="col-md-6 mb-4">
+
+                                            <label class="form-label">
+                                                Language
+                                            </label>
+
+                                            <input type="text"
+                                                class="form-control"
+                                                name="language"
+                                                value="<?php echo htmlspecialchars($course['language']); ?>"
+                                                required>
+
+                                        </div>
+
+
+
+                                        <!-- price -->
+                                        <div class="col-md-6 mb-4">
+
+                                            <label class="form-label">
+                                                Course Price
+                                            </label>
+
+                                            <input type="text"
+                                                class="form-control"
+                                                name="price"
+                                                value="<?php echo $course['price']; ?>">   <!-- TODO: later price type text has to be changed to number-->
+
+                                        </div>
+
+
+
+                                        <!-- duration -->
+                                        <div class="col-md-6 mb-4">
+
+                                            <label class="form-label">
+                                                Course Duration (Months)
+                                            </label>
+
+                                            <input type="text"
+                                                class="form-control"
+                                                name="course_duration"
+                                                value="<?php echo $course['course_duration']; ?>"
+                                                >  <!-- placeholder="Example: 6 Months" -->
+
+                                        </div>
+
+
+
+                                        <!-- intro video -->
+                                        <div class="col-md-6 mb-4">
+
+                                            <label class="form-label">
+                                                Intro Video URL
+                                            </label>
+
+                                            <input type="text"
+                                                class="form-control"
+                                                name="intro_video"
+                                                value="<?php echo htmlspecialchars($course['intro_video']); ?>">
+
+                                        </div>
+
+
+
+                                        <!-- short description -->
+                                        <div class="col-md-12 mb-4">
+
+                                            <label class="form-label">
+                                                Short Description
+                                            </label>
+
+                                            <textarea class="form-control"
+                                                    rows="3"
+                                                    name="short_description"><?php echo htmlspecialchars($course['short_description']); ?></textarea>
+
+                                        </div>
+
+
+
+                                        <!-- description -->
+                                        <div class="col-md-12 mb-4">
+
+                                            <label class="form-label">
+                                                Course Description
+                                            </label>
+
+                                            <textarea class="form-control summernote"
+                                                    name="description"><?php echo $course['description']; ?></textarea>
+
+                                        </div>
+
+
+
+                                        <!-- current thumbnail -->
+                                        <div class="col-md-12 mb-4">
+
+                                            <label class="form-label d-block">
+                                                Current Thumbnail
+                                            </label>
+
+                                            <?php
+                                            if(!empty($course['thumbnail']))
+                                            {
+                                            ?>
+
+                                                <img src="../uploads/course_thumbnails/<?php echo $course['thumbnail']; ?>"
+                                                    class="rounded border img-fluid"
+                                                    style="max-width: 180px;">
+
+                                            <?php
+                                            }
+                                            else
+                                            {
+                                                echo "<p>No Thumbnail Found</p>";
+                                            }
+                                            ?>
+
+                                        </div>
+
+
+
+                                        <!-- upload new thumbnail -->
+                                        <div class="col-md-12 mb-4">
+
+                                            <label class="form-label">
+                                                Upload New Thumbnail
+                                            </label>
+
+                                            <input type="file"
+                                                class="form-control"
+                                                name="thumbnail" accept="image/*">
+
+                                            <small class="text-muted">
+                                                Leave empty if you don't want to change image.
+                                            </small>
+
+                                        </div>
+
+
+
+                                        <!-- buttons -->
+                                        <div class="col-md-12">
+
+                                            <button type="submit"
+                                                    class="btn btn-primary">
+
+                                                <i class="fa-solid fa-floppy-disk me-1"></i>
+                                                Update Course
+
+                                            </button>
+
+
+                                            <a href="manage_courses.php"
+                                            class="btn btn-secondary">
+
+                                                Cancel
+
+                                            </a>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
 	
 
 
