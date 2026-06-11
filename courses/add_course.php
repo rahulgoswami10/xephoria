@@ -51,6 +51,9 @@ if ($_SESSION['user_type'] != 2) {
 
 	<link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
 	<!-- Feather CSS -->
 	<link rel="stylesheet" href="../assets/css/feather.css">
 
@@ -141,7 +144,7 @@ if ($_SESSION['user_type'] != 2) {
 									</li>
 
 									<!-- step 3 -->
-									<!-- <li>
+									<li>
 										<div class="profile-step">
 											<span class="dot-active mb-2">
 												<span class="number">03</span>
@@ -151,7 +154,7 @@ if ($_SESSION['user_type'] != 2) {
 												<p>Curriculam</p>
 											</div>
 										</div>
-									</li> -->
+									</li>
 
 									<!-- step 4 -->
 									<!-- <li>
@@ -652,6 +655,213 @@ if ($_SESSION['user_type'] != 2) {
 									</div>
 								</fieldset> -->
 
+
+								<!-- Curriculum Section -->
+								<fieldset class="form-inner wizard-form-card">
+
+									<div class="title d-flex justify-content-between align-items-center">
+
+										<h5 class="mb-0">Course Curriculum</h5>
+
+										<button type="button"
+												class="btn btn-primary"
+												id="add-section-btn">
+
+											<i class="fa-solid fa-plus"></i>
+											Add Section
+
+										</button>
+
+									</div>
+
+
+									<div id="curriculum-wrapper">
+
+
+										<!-- First Section -->
+										<div class="card border mb-4 section-item">
+
+											<div class="card-body">
+
+
+												<!-- section title -->
+												<div class="mb-3">
+
+													<label class="form-label">
+														Section Title
+													</label>
+
+													<input type="text"
+														class="form-control"
+														name="section_title[]"
+														placeholder="Enter section title">
+
+												</div>
+
+
+
+												<!-- lessons wrapper -->
+												<div class="lessons-wrapper">
+
+
+													<!-- lesson -->
+													<div class="border rounded p-3 mb-3 lesson-item">
+
+														<div class="row">
+
+
+															<!-- lesson title -->
+															<div class="col-md-6 mb-3">
+
+																<label class="form-label">
+																	Lesson Title
+																</label>
+
+																<input type="text"
+																	class="form-control"
+																	name="lesson_title[0][]"
+																	placeholder="Lesson title">
+
+															</div>
+
+
+
+															<!-- video -->
+															<div class="col-md-6 mb-3">
+
+																<label class="form-label">
+																	Video URL
+																</label>
+
+																<input type="text"
+																	class="form-control"
+																	name="video_url[0][]"
+																	placeholder="Youtube/Vimeo URL">
+
+															</div>
+
+
+
+															<!-- duration -->
+															<div class="col-md-4 mb-3">
+
+																<label class="form-label">
+																	Duration
+																</label>
+
+																<input type="text"
+																	class="form-control"
+																	name="lesson_duration[0][]"
+																	placeholder="10 min">
+
+															</div>
+
+
+
+															<!-- preview -->
+															<div class="col-md-4 mb-3">
+
+																<label class="form-label">
+																	Preview
+																</label>
+
+																<select class="form-control"
+																		name="is_preview[0][]">
+
+																	<option value="0">
+																		No
+																	</option>
+
+																	<option value="1">
+																		Yes
+																	</option>
+
+																</select>
+
+															</div>
+
+
+
+															<!-- remove lesson -->
+															<div class="col-md-4 mb-3 d-flex align-items-end">
+
+																<button type="button"
+																		class="btn btn-danger remove-lesson-btn w-100">
+
+																	Remove Lesson
+
+																</button>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</div>
+
+
+
+												<!-- add lesson -->
+												<button type="button"
+														class="btn btn-secondary add-lesson-btn">
+
+													<i class="fa-solid fa-plus"></i>
+													Add Lesson
+
+												</button>
+
+
+
+												<!-- remove section -->
+												<button type="button"
+														class="btn btn-danger float-end remove-section-btn">
+
+													Remove Section
+
+												</button>
+
+											</div>
+
+										</div>
+
+									</div>
+
+
+
+									<!-- buttons -->
+									<div class="add-form-btn widget-next-btn submit-btn">
+
+										<div class="btn-left">
+
+											<a href="javascript:void(0);"
+											class="btn btn-light main-btn prev_btns">
+
+												<i class="isax isax-arrow-left-2 me-1"></i>
+												Prev
+
+											</a>
+
+										</div>
+
+
+										<div class="btn-left">
+
+											<a href="javascript:void(0);"
+											class="btn btn-secondary main-btn next_btns">
+
+												Next
+												<i class="isax isax-arrow-right-3 ms-1"></i>
+
+											</a>
+
+										</div>
+
+									</div>
+
+								</fieldset>
+
+
 								<!-- course faq's section -->
 								<!-- <fieldset class="form-inner wizard-form-card">
 									<div class="title">
@@ -812,7 +1022,7 @@ if ($_SESSION['user_type'] != 2) {
 										<div class="d-flex align-items-center mb-3">
 											<div class="form-check form-check-md d-flex align-items-center">
 												<input class="form-check-input" type="checkbox" value=""
-													id="flexCheckChecked1" checked>
+													id="flexCheckChecked1" checked name="is_free">
 												<label class="form-check-label ms-2" for="flexCheckChecked1">
 													Check if this is a free course
 												</label>
@@ -1036,10 +1246,10 @@ if ($_SESSION['user_type'] != 2) {
 				</div>
 			</div>
 		</div>
-		<!-- /success -->
+		<!-- success -->
 
 
-		<!-- Footer -->
+		<!--================================ Footer ================================-->
 		<footer class="footer">
 			<div class="footer-bg">
 				<img src="../assets/img/bg/footer-bg-01.png" class="footer-bg-1" alt="">
@@ -1141,7 +1351,7 @@ if ($_SESSION['user_type'] != 2) {
 				</div>
 			</div>
 		</footer>
-		<!-- /Footer -->
+		<!--================================ Footer ================================-->
 
 
 	</div>
@@ -1167,6 +1377,272 @@ if ($_SESSION['user_type'] != 2) {
 	<script src="../assets/js/script.js"></script>
 
 	<!-- <script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="75e411c1426dae3e3f14d912-|49" defer></script> -->
+
+
+
+	<script>
+
+		let sectionIndex = 1;
+
+
+		// ADD SECTION
+		document.getElementById('add-section-btn').addEventListener('click', function () {
+
+			let html = `
+
+			<div class="card border mb-4 section-item">
+
+				<div class="card-body">
+
+					<div class="mb-3">
+
+						<label class="form-label">
+							Section Title
+						</label>
+
+						<input type="text"
+							class="form-control"
+							name="section_title[]"
+							placeholder="Enter section title">
+
+					</div>
+
+
+					<div class="lessons-wrapper">
+
+						<div class="border rounded p-3 mb-3 lesson-item">
+
+							<div class="row">
+
+								<div class="col-md-6 mb-3">
+
+									<label class="form-label">
+										Lesson Title
+									</label>
+
+									<input type="text"
+										class="form-control"
+										name="lesson_title[${sectionIndex}][]">
+
+								</div>
+
+
+								<div class="col-md-6 mb-3">
+
+									<label class="form-label">
+										Video URL
+									</label>
+
+									<input type="text"
+										class="form-control"
+										name="video_url[${sectionIndex}][]">
+
+								</div>
+
+
+								<div class="col-md-4 mb-3">
+
+									<label class="form-label">
+										Duration
+									</label>
+
+									<input type="text"
+										class="form-control"
+										name="lesson_duration[${sectionIndex}][]">
+
+								</div>
+
+
+								<div class="col-md-4 mb-3">
+
+									<label class="form-label">
+										Preview
+									</label>
+
+									<select class="form-control"
+											name="is_preview[${sectionIndex}][]">
+
+										<option value="0">No</option>
+										<option value="1">Yes</option>
+
+									</select>
+
+								</div>
+
+
+								<div class="col-md-4 mb-3 d-flex align-items-end">
+
+									<button type="button"
+											class="btn btn-danger remove-lesson-btn w-100">
+
+										Remove Lesson
+
+									</button>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+
+					<button type="button"
+							class="btn btn-secondary add-lesson-btn">
+
+						Add Lesson
+
+					</button>
+
+
+					<button type="button"
+							class="btn btn-danger float-end remove-section-btn">
+
+						Remove Section
+
+					</button>
+
+				</div>
+
+			</div>
+			`;
+
+			document.getElementById('curriculum-wrapper')
+					.insertAdjacentHTML('beforeend', html);
+
+			sectionIndex++;
+
+		});
+
+
+
+
+		// ADD LESSON
+		document.addEventListener('click', function(e){
+
+			if(e.target.classList.contains('add-lesson-btn')){
+
+				let sectionCard = e.target.closest('.section-item');
+
+				let lessonsWrapper = sectionCard.querySelector('.lessons-wrapper');
+
+				let sectionNumber = [...document.querySelectorAll('.section-item')]
+									.indexOf(sectionCard);
+
+				let lessonHTML = `
+
+				<div class="border rounded p-3 mb-3 lesson-item">
+
+					<div class="row">
+
+						<div class="col-md-6 mb-3">
+
+							<label class="form-label">
+								Lesson Title
+							</label>
+
+							<input type="text"
+								class="form-control"
+								name="lesson_title[${sectionNumber}][]">
+
+						</div>
+
+
+						<div class="col-md-6 mb-3">
+
+							<label class="form-label">
+								Video URL
+							</label>
+
+							<input type="text"
+								class="form-control"
+								name="video_url[${sectionNumber}][]">
+
+						</div>
+
+
+						<div class="col-md-4 mb-3">
+
+							<label class="form-label">
+								Duration
+							</label>
+
+							<input type="text"
+								class="form-control"
+								name="lesson_duration[${sectionNumber}][]">
+
+						</div>
+
+
+						<div class="col-md-4 mb-3">
+
+							<label class="form-label">
+								Preview
+							</label>
+
+							<select class="form-control"
+									name="is_preview[${sectionNumber}][]">
+
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+
+							</select>
+
+						</div>
+
+
+						<div class="col-md-4 mb-3 d-flex align-items-end">
+
+							<button type="button"
+									class="btn btn-danger remove-lesson-btn w-100">
+
+								Remove Lesson
+
+							</button>
+
+						</div>
+
+					</div>
+
+				</div>
+				`;
+
+				lessonsWrapper.insertAdjacentHTML('beforeend', lessonHTML);
+
+			}
+
+		});
+
+
+
+
+		// REMOVE LESSON
+		document.addEventListener('click', function(e){
+
+			if(e.target.classList.contains('remove-lesson-btn')){
+
+				e.target.closest('.lesson-item').remove();
+
+			}
+
+		});
+
+
+
+
+		// REMOVE SECTION
+		document.addEventListener('click', function(e){
+
+			if(e.target.classList.contains('remove-section-btn')){
+
+				e.target.closest('.section-item').remove();
+
+			}
+
+		});
+
+	</script>
 
 
 </body>

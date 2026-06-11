@@ -33,6 +33,11 @@ if ($_SESSION['user_type'] != 2) {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "</pre>";
+    // exit();
+
     
     // ============================
     // GET FORM DATA
@@ -285,19 +290,123 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 
-    // ============================
     // EXECUTE QUERY
-    // ============================
-
     $execute = mysqli_stmt_execute($stmt);
 
 
+    // GET COURSE ID
+    $course_id = mysqli_insert_id($conn);
 
-    // ============================
+
+
     // SUCCESS
-    // ============================
-
     if ($execute) {
+
+        // ============================
+        // SAVE SECTIONS & LESSONS
+        // ============================
+
+        if (!empty($_POST['section_title'])) {
+
+            foreach ($_POST['section_title'] as $section_index => $section_title) {
+
+                $section_title = trim($section_title);
+
+                if (empty($section_title)) {
+                    continue;
+                }
+
+                // ------------------------
+                // INSERT SECTION
+                // ------------------------
+
+                $section_query = "
+                    INSERT INTO course_sections
+                    (
+                        course_id,
+                        section_title
+                    )
+                    VALUES
+                    (
+                        ?,
+                        ?
+                    )
+                ";
+
+                $section_stmt = mysqli_prepare($conn, $section_query);
+
+                mysqli_stmt_bind_param(
+                    $section_stmt,
+                    "is",
+                    $course_id,
+                    $section_title
+                );
+
+                mysqli_stmt_execute($section_stmt);
+
+                $section_id = mysqli_insert_id($conn);
+
+
+                // ------------------------
+                // INSERT LESSONS
+                // ------------------------
+
+                if (isset($_POST['lesson_title'][$section_index])) {
+
+                    foreach ($_POST['lesson_title'][$section_index] as $lesson_index => $lesson_title) {
+
+                        $lesson_title = trim($lesson_title);
+
+                        if (empty($lesson_title)) {
+                            continue;
+                        }
+
+                        $video_url = $_POST['video_url'][$section_index][$lesson_index] ?? '';
+
+                        $duration = $_POST['lesson_duration'][$section_index][$lesson_index] ?? '';
+
+                        $is_preview = $_POST['is_preview'][$section_index][$lesson_index] ?? 0;
+
+
+                        $lesson_query = "
+                            INSERT INTO lessons
+                            (
+                                course_id,
+                                section_id,
+                                lesson_title,
+                                video_url,
+                                duration,
+                                is_preview
+                            )
+                            VALUES
+                            (
+                                ?,
+                                ?,
+                                ?,
+                                ?,
+                                ?,
+                                ?
+                            )
+                        ";
+
+                        $lesson_stmt = mysqli_prepare($conn, $lesson_query);
+
+                        mysqli_stmt_bind_param(
+                            $lesson_stmt,
+                            "iisssi",
+                            $course_id,
+                            $section_id,
+                            $lesson_title,
+                            $video_url,
+                            $duration,
+                            $is_preview
+                        );
+
+                        mysqli_stmt_execute($lesson_stmt);
+                    }
+                }
+            }
+        }
 
         header("Location: manage_courses.php?success=course_added");
         exit();
