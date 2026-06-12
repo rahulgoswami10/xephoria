@@ -426,21 +426,28 @@ $section_result = mysqli_stmt_get_result($section_stmt);
 
 															<?php while ($lesson = mysqli_fetch_assoc($lesson_result)) { ?>
 
-																<li class="list-group-item d-flex justify-content-between align-items-center">
+																<li class="list-group-item">
 
-																	<div>
+																	<div class="d-flex justify-content-between">
 
-																		<i class="fa-solid fa-circle-play text-primary me-2"></i>
+																		<div>
+																			<i class="fa-solid fa-circle-play text-primary me-2"></i>
+																			<?php echo htmlspecialchars($lesson['lesson_title']); ?>
+																		</div>
 
-																		<?php echo htmlspecialchars($lesson['lesson_title']); ?>
+																		<span>
+																			<?php echo $lesson['duration']; ?> min
+																		</span>
 
 																	</div>
 
-																	<span class="badge bg-light text-dark">
+																	<?php if($lesson['is_preview'] == 1){ ?>
 
-																		<?php echo $lesson['duration']; ?> min
+																		<span class="badge bg-success mt-2">
+																			Preview Lesson
+																		</span>
 
-																	</span>
+																	<?php } ?>
 
 																</li>
 

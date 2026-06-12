@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // move file
         if (move_uploaded_file($file_tmp, $upload_path)) {
 
-            echo "Image uploaded successfully";
+            // echo "Image uploaded successfully";
 
         } else {
 
@@ -204,6 +204,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             echo "Upload Path : " . $upload_path;
 
+            exit();
+        }
+    }
+
+
+    // course price validation
+    if ($is_free == 0) {
+
+        if (!is_numeric($price)) {
+
+            echo "Invalid course price";
             exit();
         }
     }
@@ -294,13 +305,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $execute = mysqli_stmt_execute($stmt);
 
 
-    // GET COURSE ID
-    $course_id = mysqli_insert_id($conn);
+
 
 
 
     // SUCCESS
     if ($execute) {
+
+        // GET COURSE ID
+        $course_id = mysqli_insert_id($conn);
 
         // ============================
         // SAVE SECTIONS & LESSONS
@@ -367,6 +380,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                         $is_preview = $_POST['is_preview'][$section_index][$lesson_index] ?? 0;
 
+                        $lesson_content = $_POST['lesson_content'][$section_index][$lesson_index] ?? '';
+
 
                         $lesson_query = "
                             INSERT INTO lessons
@@ -374,12 +389,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 course_id,
                                 section_id,
                                 lesson_title,
+                                lesson_content,
                                 video_url,
                                 duration,
                                 is_preview
                             )
                             VALUES
                             (
+                                ?,
                                 ?,
                                 ?,
                                 ?,
@@ -393,10 +410,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                         mysqli_stmt_bind_param(
                             $lesson_stmt,
-                            "iisssi",
+                            "iissssi",
                             $course_id,
                             $section_id,
                             $lesson_title,
+                            $lesson_content,
                             $video_url,
                             $duration,
                             $is_preview

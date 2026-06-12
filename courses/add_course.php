@@ -341,8 +341,9 @@ if ($_SESSION['user_type'] != 2) {
 									<div
 										class="add-form-btn widget-next-btn submit-btn d-flex justify-content-end mb-0">
 										<div class="btn-left">
-											<a href="javascript:void(0);" class="btn main-btn next_btns">Next <i
-													class="isax isax-arrow-right-3 ms-1"></i></a>
+											<a href="javascript:void(0);" class="btn main-btn next_btns">
+												Next <i class="fa-solid fa-arrow-right-long"></i>
+											</a>
 										</div>
 									</div>
 								</fieldset>
@@ -439,13 +440,16 @@ if ($_SESSION['user_type'] != 2) {
 									<div class="add-form-btn widget-next-btn submit-btn">
 										<div class="btn-left">
 											<a href="javascript:void(0);"
-												class="btn btn-light main-btn prev_btns d-flex align-items-center"><i
-													class="isax isax-arrow-left-2 me-1"></i>Prev</a>
+												class="btn btn-light main-btn prev_btns d-flex align-items-center">
+													<i class="fa-solid fa-arrow-left-long"></i>
+													Prev
+											</a>
 										</div>
 										<div class="btn-left">
 											<a href="javascript:void(0);"
-												class="btn btn-secondary main-btn next_btns d-flex align-items-center">Next
-												<i class="isax isax-arrow-right-3 ms-1"></i></a>
+												class="btn btn-secondary main-btn next_btns d-flex align-items-center">
+												Next <i class="fa-solid fa-arrow-right-long"></i>
+											</a>
 										</div>
 									</div>
 								</fieldset>
@@ -757,6 +761,22 @@ if ($_SESSION['user_type'] != 2) {
 															</div>
 
 
+															<!-- lesson content -->
+															<div class="col-md-12 mb-3">
+
+																<label class="form-label">
+																	Lesson Content
+																</label>
+
+																<textarea
+																	class="form-control lesson-content"
+																	name="lesson_content[0][]"
+																	rows="6">
+																</textarea>
+
+															</div>
+
+
 
 															<!-- preview -->
 															<div class="col-md-4 mb-3">
@@ -837,7 +857,7 @@ if ($_SESSION['user_type'] != 2) {
 											<a href="javascript:void(0);"
 											class="btn btn-light main-btn prev_btns">
 
-												<i class="isax isax-arrow-left-2 me-1"></i>
+												<i class="fa-solid fa-arrow-left-long"></i>
 												Prev
 
 											</a>
@@ -851,7 +871,7 @@ if ($_SESSION['user_type'] != 2) {
 											class="btn btn-secondary main-btn next_btns">
 
 												Next
-												<i class="isax isax-arrow-right-3 ms-1"></i>
+												<i class="fa-solid fa-arrow-right-long"></i>
 
 											</a>
 
@@ -1074,8 +1094,10 @@ if ($_SESSION['user_type'] != 2) {
 									</div>
 									<div class="add-form-btn widget-next-btn submit-btn">
 										<div class="btn-left">
-											<a href="javascript:void(0);" class="btn btn-light main-btn prev_btns"><i
-													class="isax isax-arrow-left-2 me-1"></i>Prev</a>
+											<a href="javascript:void(0);" class="btn btn-light main-btn prev_btns">
+												<i class="fa-solid fa-arrow-left-long"></i>
+												Prev
+											</a>
 										</div>
 										<div class="btn-left">
 											<!-- <a href="javascript:void(0);" class="btn btn-secondary main-btn next_btns"
@@ -1380,6 +1402,21 @@ if ($_SESSION['user_type'] != 2) {
 
 
 
+
+	<script>
+
+		$(document).ready(function(){
+
+			$('.lesson-content').summernote({
+
+				height: 250
+
+			});
+
+		});
+
+	</script>					
+	
 	<script>
 
 		let sectionIndex = 1;
@@ -1453,6 +1490,21 @@ if ($_SESSION['user_type'] != 2) {
 								</div>
 
 
+								<div class="col-md-12 mb-3">
+
+									<label class="form-label">
+										Lesson Content
+									</label>
+
+									<textarea
+										class="form-control lesson-content"
+										name="lesson_content[${sectionIndex}][]"
+										rows="6">
+									</textarea>
+
+								</div>
+
+
 								<div class="col-md-4 mb-3">
 
 									<label class="form-label">
@@ -1508,10 +1560,26 @@ if ($_SESSION['user_type'] != 2) {
 			</div>
 			`;
 
+			// document.getElementById('curriculum-wrapper')
+			// 		.insertAdjacentHTML('beforeend', html);
+
+			// sectionIndex++;
+
+			// $('.lesson-content').summernote({
+			// 	height: 250
+			// });
+
 			document.getElementById('curriculum-wrapper')
 					.insertAdjacentHTML('beforeend', html);
 
 			sectionIndex++;
+
+			let newTextarea = document.querySelectorAll('.lesson-content');
+			let lastTextarea = newTextarea[newTextarea.length - 1];
+
+			$(lastTextarea).summernote({
+				height: 250
+			});
 
 		});
 
@@ -1575,6 +1643,21 @@ if ($_SESSION['user_type'] != 2) {
 						</div>
 
 
+						<div class="col-md-12 mb-3">
+
+							<label class="form-label">
+								Lesson Content
+							</label>
+
+							<textarea
+								class="form-control lesson-content"
+								name="lesson_content[${sectionNumber}][]"
+								rows="6">
+							</textarea>
+
+						</div>
+
+
 						<div class="col-md-4 mb-3">
 
 							<label class="form-label">
@@ -1608,7 +1691,20 @@ if ($_SESSION['user_type'] != 2) {
 				</div>
 				`;
 
+				// lessonsWrapper.insertAdjacentHTML('beforeend', lessonHTML);
+
+				// $('.lesson-content').summernote({
+				// 	height: 250
+				// });
+
 				lessonsWrapper.insertAdjacentHTML('beforeend', lessonHTML);
+
+				let newTextarea = lessonsWrapper.querySelectorAll('.lesson-content');
+				let lastTextarea = newTextarea[newTextarea.length - 1];
+
+				$(lastTextarea).summernote({
+					height: 250
+				});
 
 			}
 
