@@ -89,6 +89,30 @@ if (mysqli_num_rows($result) == 0) {
 
 $course = mysqli_fetch_assoc($result);
 
+
+// ============================
+// FETCH COURSE SECTIONS
+// ============================
+
+$section_query = "
+    SELECT *
+    FROM course_sections
+    WHERE course_id = ?
+    ORDER BY id ASC
+";
+
+$section_stmt = mysqli_prepare($conn, $section_query);
+
+mysqli_stmt_bind_param(
+    $section_stmt,
+    "i",
+    $course_id
+);
+
+mysqli_stmt_execute($section_stmt);
+
+$section_result = mysqli_stmt_get_result($section_stmt);
+
 ?>
 
 
@@ -328,6 +352,119 @@ $course = mysqli_fetch_assoc($result);
                                     </div>
 
                                 </div>
+
+
+
+								<!-- Course Curriculum -->
+								<div class="mb-5">
+
+									<h4 class="fw-bold mb-4">
+										Course Curriculum
+									</h4>
+
+									<div class="accordion" id="courseAccordion">
+
+										<?php
+
+										$accordion_count = 1;
+
+										while ($section = mysqli_fetch_assoc($section_result)) {
+
+											$section_id = $section['id'];
+
+										?>
+
+											<div class="accordion-item mb-3 border rounded">
+
+												<h2 class="accordion-header">
+
+													<button
+														class="accordion-button collapsed"
+														type="button"
+														data-bs-toggle="collapse"
+														data-bs-target="#section<?php echo $section_id; ?>"
+													>
+
+														<?php echo htmlspecialchars($section['section_title']); ?>
+
+													</button>
+
+												</h2>
+
+												<div
+													id="section<?php echo $section_id; ?>"
+													class="accordion-collapse collapse"
+													data-bs-parent="#courseAccordion"
+												>
+
+													<div class="accordion-body">
+
+														<?php
+
+														$lesson_query = "
+															SELECT *
+															FROM lessons
+															WHERE section_id = ?
+															ORDER BY id ASC
+														";
+
+														$lesson_stmt = mysqli_prepare($conn, $lesson_query);
+
+														mysqli_stmt_bind_param(
+															$lesson_stmt,
+															"i",
+															$section_id
+														);
+
+														mysqli_stmt_execute($lesson_stmt);
+
+														$lesson_result = mysqli_stmt_get_result($lesson_stmt);
+
+														?>
+
+														<ul class="list-group">
+
+															<?php while ($lesson = mysqli_fetch_assoc($lesson_result)) { ?>
+
+																<li class="list-group-item d-flex justify-content-between align-items-center">
+
+																	<div>
+
+																		<i class="fa-solid fa-circle-play text-primary me-2"></i>
+
+																		<?php echo htmlspecialchars($lesson['lesson_title']); ?>
+
+																	</div>
+
+																	<span class="badge bg-light text-dark">
+
+																		<?php echo $lesson['duration']; ?> min
+
+																	</span>
+
+																</li>
+
+															<?php } ?>
+
+														</ul>
+
+													</div>
+
+												</div>
+
+											</div>
+
+										<?php
+
+											$accordion_count++;
+
+										}
+
+										?>
+
+									</div>
+
+								</div>
 
 
 
