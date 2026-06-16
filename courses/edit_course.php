@@ -58,6 +58,31 @@ if (!$course) {
 }
 
 
+
+// ============================
+// FETCH SECTIONS
+// ============================
+
+$section_query = "
+    SELECT *
+    FROM course_sections
+    WHERE course_id = ?
+    ORDER BY id ASC
+";
+
+$section_stmt = mysqli_prepare($conn, $section_query);
+
+mysqli_stmt_bind_param(
+    $section_stmt,
+    "i",
+    $course_id
+);
+
+mysqli_stmt_execute($section_stmt);
+
+$section_result = mysqli_stmt_get_result($section_stmt);
+
+
 // ============================
 // GET CATEGORIES
 // ============================
@@ -438,6 +463,240 @@ $category_result = mysqli_query($conn, $category_query);
 
 
 
+                                        <!-- COURSE CURRICULUM -->
+                                        <div class="col-md-12 mb-4">
+
+                                            <hr>
+
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                                <h4>Course Curriculum</h4>
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                    id="add-section-btn">
+
+                                                    Add Section
+
+                                                </button>
+
+                                            </div>
+
+                                            <div id="curriculum-wrapper">
+
+                                                <?php
+
+                                                $section_index = 0;
+
+                                                while($section = mysqli_fetch_assoc($section_result))
+                                                {
+
+                                                ?>
+
+                                                    <div class="card border mb-4 section-item" data-section-index="<?php echo $section_index; ?>">
+
+                                                        <div class="card-body">
+
+                                                            <input
+                                                                type="hidden"
+                                                                name="existing_section_id[]"
+                                                                value="<?php echo $section['id']; ?>">
+
+                                                            <div class="mb-3">
+
+                                                                <label class="form-label">
+                                                                    Section Title
+                                                                </label>
+
+                                                                <input
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    name="section_title[]"
+                                                                    value="<?php echo htmlspecialchars($section['section_title']); ?>">
+
+                                                            </div>
+
+                                                            <div class="lessons-wrapper">
+
+
+                                                                <?php
+
+                                                                    $lesson_query = "
+                                                                        SELECT *
+                                                                        FROM lessons
+                                                                        WHERE section_id = ?
+                                                                        ORDER BY id ASC
+                                                                    ";
+
+                                                                    $lesson_stmt = mysqli_prepare($conn, $lesson_query);
+
+                                                                    mysqli_stmt_bind_param(
+                                                                        $lesson_stmt,
+                                                                        "i",
+                                                                        $section['id']
+                                                                    );
+
+                                                                    mysqli_stmt_execute($lesson_stmt);
+
+                                                                    $lesson_result = mysqli_stmt_get_result($lesson_stmt);
+
+
+                                                                    while($lesson = mysqli_fetch_assoc($lesson_result))
+                                                                    {
+
+                                                                    ?>
+                                                                        <div class="border rounded p-3 mb-3 lesson-item">
+
+                                                                            <input
+                                                                                type="hidden"
+                                                                                name="existing_lesson_id[<?php echo $section_index; ?>][]"
+                                                                                value="<?php echo $lesson['id']; ?>">
+
+                                                                            <div class="row">
+
+                                                                                <div class="col-md-6 mb-3">
+
+                                                                                    <label class="form-label">
+                                                                                        Lesson Title
+                                                                                    </label>
+
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        class="form-control"
+                                                                                        name="lesson_title[<?php echo $section_index; ?>][]"
+                                                                                        value="<?php echo htmlspecialchars($lesson['lesson_title']); ?>">
+
+                                                                                </div>
+
+
+                                                                                <div class="col-md-6 mb-3">
+
+                                                                                    <label class="form-label">
+                                                                                        Video URL
+                                                                                    </label>
+
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        class="form-control"
+                                                                                        name="video_url[<?php echo $section_index; ?>][]"
+                                                                                        value="<?php echo htmlspecialchars($lesson['video_url']); ?>">
+
+                                                                                </div>
+
+
+                                                                                <div class="col-md-4 mb-3">
+
+                                                                                    <label class="form-label">
+                                                                                        Duration
+                                                                                    </label>
+
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        class="form-control"
+                                                                                        name="lesson_duration[<?php echo $section_index; ?>][]"
+                                                                                        value="<?php echo htmlspecialchars($lesson['duration']); ?>">
+
+                                                                                </div>
+
+
+                                                                                <div class="col-md-12 mb-3">
+
+                                                                                    <label class="form-label">
+                                                                                        Lesson Content
+                                                                                    </label>
+
+                                                                                    <textarea
+                                                                                        class="form-control lesson-content"
+                                                                                        name="lesson_content[<?php echo $section_index; ?>][]"
+                                                                                        rows="6"><?php echo $lesson['lesson_content']; ?></textarea>
+
+                                                                                </div>
+
+
+                                                                                <div class="col-md-4 mb-3">
+
+                                                                                    <label class="form-label">
+                                                                                        Preview
+                                                                                    </label>
+
+                                                                                    <select
+                                                                                        class="form-control"
+                                                                                        name="is_preview[<?php echo $section_index; ?>][]">
+
+                                                                                        <option value="0"
+                                                                                            <?php if($lesson['is_preview']==0) echo "selected"; ?>>
+                                                                                            No
+                                                                                        </option>
+
+                                                                                        <option value="1"
+                                                                                            <?php if($lesson['is_preview']==1) echo "selected"; ?>>
+                                                                                            Yes
+                                                                                        </option>
+
+                                                                                    </select>
+
+                                                                                </div>
+
+
+                                                                                <div class="col-md-4 mb-3 d-flex align-items-end">
+
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        class="btn btn-danger remove-lesson-btn w-100">
+
+                                                                                        Remove Lesson
+
+                                                                                    </button>
+
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    <?php } ?>
+                                                             </div>       
+
+                                                            <div class="mt-3">
+                                                            
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-secondary add-lesson-btn w-auto">
+
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                    Add Lesson
+
+                                                                </button>
+
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-danger remove-section-btn float-end">
+
+                                                                    Remove Section
+                                                                </button>
+
+                                                            </div>
+                                                            
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            <?php
+
+                                            $section_index++;
+
+                                            }
+
+                                            ?>
+
+                                        </div>
+
+                                    </div>
+
+
                                         <!-- buttons -->
                                         <div class="col-md-12">
 
@@ -607,6 +866,367 @@ $category_result = mysqli_query($conn, $category_query);
 
 	<!-- <script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="75e411c1426dae3e3f14d912-|49" defer></script> -->
 
+
+    <script>
+        $(document).ready(function(){
+
+            $('.lesson-content').summernote({
+                height: 250
+            });
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('remove-lesson-btn')){
+
+                e.target.closest('.lesson-item').remove();
+
+            }
+
+        });
+
+
+        document.addEventListener('click', function(e){
+
+            if(e.target.classList.contains('remove-section-btn')){
+
+                e.target.closest('.section-item').remove();
+
+            }
+
+        });
+    </script>
+
+
+	<script>
+
+		// let sectionIndex = 1;
+
+        let sectionIndex = document.querySelectorAll('.section-item').length;
+
+
+		// ADD SECTION
+		document.getElementById('add-section-btn').addEventListener('click', function () {
+
+			let html = `
+
+			<div class="card border mb-4 section-item" data-section-index="${sectionIndex}">
+
+				<div class="card-body">
+
+					<div class="mb-3">
+
+						<label class="form-label">
+							Section Title
+						</label>
+
+						<input type="text"
+							class="form-control"
+							name="section_title[]"
+							placeholder="Enter section title">
+
+					</div>
+
+
+					<div class="lessons-wrapper">
+
+						<div class="border rounded p-3 mb-3 lesson-item">
+
+							<div class="row">
+
+								<div class="col-md-6 mb-3">
+
+									<label class="form-label">
+										Lesson Title
+									</label>
+
+									<input type="text"
+										class="form-control"
+										name="lesson_title[${sectionIndex}][]">
+
+								</div>
+
+
+								<div class="col-md-6 mb-3">
+
+									<label class="form-label">
+										Video URL
+									</label>
+
+									<input type="text"
+										class="form-control"
+										name="video_url[${sectionIndex}][]">
+
+								</div>
+
+
+								<div class="col-md-4 mb-3">
+
+									<label class="form-label">
+										Duration
+									</label>
+
+									<input type="text"
+										class="form-control"
+										name="lesson_duration[${sectionIndex}][]">
+
+								</div>
+
+
+								<div class="col-md-12 mb-3">
+
+									<label class="form-label">
+										Lesson Content
+									</label>
+
+									<textarea
+										class="form-control lesson-content"
+										name="lesson_content[${sectionIndex}][]"
+										rows="6">
+									</textarea>
+
+								</div>
+
+
+								<div class="col-md-4 mb-3">
+
+									<label class="form-label">
+										Preview
+									</label>
+
+									<select class="form-control"
+											name="is_preview[${sectionIndex}][]">
+
+										<option value="0">No</option>
+										<option value="1">Yes</option>
+
+									</select>
+
+								</div>
+
+
+								<div class="col-md-4 mb-3 d-flex align-items-end">
+
+									<button type="button"
+											class="btn btn-danger remove-lesson-btn w-100">
+
+										Remove Lesson
+
+									</button>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+
+					<button type="button"
+							class="btn btn-secondary add-lesson-btn">
+
+						Add Lesson
+
+					</button>
+
+
+					<button type="button"
+							class="btn btn-danger float-end remove-section-btn">
+
+						Remove Section
+
+					</button>
+
+				</div>
+
+			</div>
+			`;
+
+			// document.getElementById('curriculum-wrapper')
+			// 		.insertAdjacentHTML('beforeend', html);
+
+			// sectionIndex++;
+
+			// $('.lesson-content').summernote({
+			// 	height: 250
+			// });
+
+			document.getElementById('curriculum-wrapper')
+					.insertAdjacentHTML('beforeend', html);
+
+			sectionIndex++;
+
+			let newTextarea = document.querySelectorAll('.lesson-content');
+			let lastTextarea = newTextarea[newTextarea.length - 1];
+
+			$(lastTextarea).summernote({
+				height: 250
+			});
+
+		});
+
+
+
+
+		// ADD LESSON
+		document.addEventListener('click', function(e){
+
+			if(e.target.classList.contains('add-lesson-btn')){
+
+				let sectionCard = e.target.closest('.section-item');
+
+				let lessonsWrapper = sectionCard.querySelector('.lessons-wrapper');
+
+				// let sectionNumber = [...document.querySelectorAll('.section-item')]
+				// 					.indexOf(sectionCard);
+
+                let sectionNumber = sectionCard.dataset.sectionIndex;
+
+				let lessonHTML = `
+
+				<div class="border rounded p-3 mb-3 lesson-item">
+
+					<div class="row">
+
+						<div class="col-md-6 mb-3">
+
+							<label class="form-label">
+								Lesson Title
+							</label>
+
+							<input type="text"
+								class="form-control"
+								name="lesson_title[${sectionNumber}][]">
+
+						</div>
+
+
+						<div class="col-md-6 mb-3">
+
+							<label class="form-label">
+								Video URL
+							</label>
+
+							<input type="text"
+								class="form-control"
+								name="video_url[${sectionNumber}][]">
+
+						</div>
+
+
+						<div class="col-md-4 mb-3">
+
+							<label class="form-label">
+								Duration
+							</label>
+
+							<input type="text"
+								class="form-control"
+								name="lesson_duration[${sectionNumber}][]">
+
+						</div>
+
+
+						<div class="col-md-12 mb-3">
+
+							<label class="form-label">
+								Lesson Content
+							</label>
+
+							<textarea
+								class="form-control lesson-content"
+								name="lesson_content[${sectionNumber}][]"
+								rows="6">
+							</textarea>
+
+						</div>
+
+
+						<div class="col-md-4 mb-3">
+
+							<label class="form-label">
+								Preview
+							</label>
+
+							<select class="form-control"
+									name="is_preview[${sectionNumber}][]">
+
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+
+							</select>
+
+						</div>
+
+
+						<div class="col-md-4 mb-3 d-flex align-items-end">
+
+							<button type="button"
+									class="btn btn-danger remove-lesson-btn w-100">
+
+								Remove Lesson
+
+							</button>
+
+						</div>
+
+					</div>
+
+				</div>
+				`;
+
+				// lessonsWrapper.insertAdjacentHTML('beforeend', lessonHTML);
+
+				// $('.lesson-content').summernote({
+				// 	height: 250
+				// });
+
+				lessonsWrapper.insertAdjacentHTML('beforeend', lessonHTML);
+
+				let newTextarea = lessonsWrapper.querySelectorAll('.lesson-content');
+				let lastTextarea = newTextarea[newTextarea.length - 1];
+
+				$(lastTextarea).summernote({
+					height: 250
+				});
+
+			}
+
+		});
+
+
+
+
+		// REMOVE LESSON
+		document.addEventListener('click', function(e){
+
+			if(e.target.classList.contains('remove-lesson-btn')){
+
+				e.target.closest('.lesson-item').remove();
+
+			}
+
+		});
+
+
+
+
+		// REMOVE SECTION
+		document.addEventListener('click', function(e){
+
+			if(e.target.classList.contains('remove-section-btn')){
+
+				e.target.closest('.section-item').remove();
+
+			}
+
+		});
+
+	</script>
 
 </body> 
 
