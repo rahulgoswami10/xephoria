@@ -46,17 +46,17 @@ if(!isset($_SESSION['user_id'])) {
 						</a>
 						<div class="navbar-logo">
 							<a class="logo-white header-logo" href="index-2.html">
-								<img src="assets/img/logo.svg" class="logo" alt="Logo">
+								<img src="../assets/img/logo.svg" class="logo" alt="Logo">
 							</a>
 							<a class="logo-dark header-logo" href="index-2.html">
-								<img src="assets/img/logo-white.svg" class="logo" alt="Logo">
+								<img src="../assets/img/logo-white.svg" class="logo" alt="Logo">
 							</a>
 						</div>
 					</div>
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
 							<a href="index-2.html" class="menu-logo">
-								<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+								<img src="../assets/img/logo.svg" class="img-fluid" alt="Logo">
 							</a>
 							<a id="menu_close" class="menu-close" href="javascript:void(0);">
 								<i class="fas fa-times"></i>
@@ -73,7 +73,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-2.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-01.jpg" class="img-fluid "
+																	src="../assets/img/home/home-01.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -86,7 +86,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-3.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-02.jpg" class="img-fluid "
+																	src="../assets/img/home/home-02.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -99,7 +99,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-4.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-03.jpg" class="img-fluid "
+																	src="../assets/img/home/home-03.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -112,7 +112,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-5.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-04.jpg" class="img-fluid "
+																	src="../assets/img/home/home-04.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -125,7 +125,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-8.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-07.jpg" class="img-fluid "
+																	src="../assets/img/home/home-07.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -138,7 +138,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-7.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-06.jpg" class="img-fluid "
+																	src="../assets/img/home/home-06.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -151,7 +151,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-6.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-05.jpg" class="img-fluid "
+																	src="../assets/img/home/home-05.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -164,7 +164,7 @@ if(!isset($_SESSION['user_id'])) {
 													<div class="single-demo">
 														<div class="demo-img">
 															<a href="index-9.html" class="inner-demo-img"><img
-																	src="assets/img/home/home-08.jpg" class="img-fluid "
+																	src="../assets/img/home/home-08.jpg" class="img-fluid "
 																	alt="img"></a>
 														</div>
 														<div class="demo-info">
@@ -350,13 +350,13 @@ if(!isset($_SESSION['user_id'])) {
 						<div class="dropdown profile-dropdown">
 							<a href="javascript:void(0);" class="d-flex align-items-center" data-bs-toggle="dropdown">
 								<span class="avatar">
-									<img src="assets/img/user/user-02.jpg" alt="Img" class="img-fluid rounded-circle">
+									<img src="../assets/img/user/user-02.jpg" alt="Img" class="img-fluid rounded-circle">
 								</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<div class="profile-header d-flex align-items-center">
 									<div class="avatar">
-										<img src="assets/img/user/user-02.jpg" alt="Img"
+										<img src="../assets/img/user/user-02.jpg" alt="Img"
 											class="img-fluid rounded-circle">
 									</div>
 									<div>
@@ -430,14 +430,14 @@ if(!isset($_SESSION['user_id'])) {
 				<!-- profile box -->
 				<div class="profile-card overflow-hidden bg-blue-gradient2 mb-5 p-5">
 					<div class="profile-card-bg">
-						<img src="assets/img/bg/card-bg-01.png" class="profile-card-bg-1" alt="">
+						<img src="../assets/img/bg/card-bg-01.png" class="profile-card-bg-1" alt="">
 					</div>
 					<div class="row align-items-center row-gap-3">
 						<div class="col-lg-6">
 							<div class="d-flex align-items-center flex-wrap gap-3">
 								<span
 									class="avatar avatar-xxl avatar-rounded border border-white border-2 position-relative">
-									<img src="assets/img/user/user-02.jpg" alt="">
+									<img src="../assets/img/user/user-02.jpg" alt="">
 									<span class="verify-tick"><i class="isax isax-verify5"></i></span>
 								</span>
 								<div>
@@ -581,8 +581,8 @@ if(!isset($_SESSION['user_id'])) {
 					<!-- sidebar -->
 					<div class="col-lg-9">
 						<div class="card bg-light quiz-ans-card">
-							<img src="assets/img/shapes/withdraw-bg1.svg" class="quiz-ans-bg1" alt="img">
-							<img src="assets/img/shapes/withdraw-bg2.svg" class="quiz-ans-bg2" alt="img">
+							<img src="../assets/img/shapes/withdraw-bg1.svg" class="quiz-ans-bg1" alt="img">
+							<img src="../assets/img/shapes/withdraw-bg2.svg" class="quiz-ans-bg2" alt="img">
 							<div class="card-body">
 								<div class="row align-items-center">
 									<div class="col-md-8">
@@ -607,7 +607,7 @@ if(!isset($_SESSION['user_id'])) {
 										<div class="d-flex align-items-center">
 											<span
 												class="icon-box bg-primary-transparent me-2 me-xxl-3 flex-shrink-0"><img
-													src="assets/img/icon/graduation.svg" alt=""></span>
+													src="../assets/img/icon/graduation.svg" alt=""></span>
 											<div>
 												<span class="d-block">Enrolled Courses</span>
 												<h4 class="fs-24 mt-1">12</h4>
@@ -622,7 +622,7 @@ if(!isset($_SESSION['user_id'])) {
 										<div class="d-flex align-items-center">
 											<span
 												class="icon-box bg-secondary-transparent me-2 me-xxl-3 flex-shrink-0"><img
-													src="assets/img/icon/book.svg" alt=""></span>
+													src="../assets/img/icon/book.svg" alt=""></span>
 											<div>
 												<span class="d-block">Active Courses</span>
 												<h4 class="fs-24 mt-1">03</h4>
@@ -637,7 +637,7 @@ if(!isset($_SESSION['user_id'])) {
 										<div class="d-flex align-items-center">
 											<span
 												class="icon-box bg-success-transparent me-2 me-xxl-3 flex-shrink-0"><img
-													src="assets/img/icon/bookmark.svg" alt=""></span>
+													src="../assets/img/icon/bookmark.svg" alt=""></span>
 											<div>
 												<span class="d-block">Completed Courses</span>
 												<h4 class="fs-24 mt-1">10</h4>
@@ -928,7 +928,7 @@ if(!isset($_SESSION['user_id'])) {
 								<div class="course-item-two course-item mb-0">
 									<div class="course-img">
 										<a href="course-details.html">
-											<img src="assets/img/course/course-01.jpg" alt="img" class="img-fluid">
+											<img src="../assets/img/course/course-01.jpg" alt="img" class="img-fluid">
 										</a>
 										<div
 											class="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-3">
@@ -941,7 +941,7 @@ if(!isset($_SESSION['user_id'])) {
 										<div class="d-flex justify-content-between mb-2">
 											<div class="d-flex align-items-center">
 												<a href="instructor-details.html" class="avatar avatar-sm">
-													<img src="assets/img/user/user-29.jpg" alt="img"
+													<img src="../assets/img/user/user-29.jpg" alt="img"
 														class="img-fluid avatar avatar-sm rounded-circle">
 												</a>
 												<div class="ms-2">
@@ -971,7 +971,7 @@ if(!isset($_SESSION['user_id'])) {
 								<div class="course-item-two course-item mb-0">
 									<div class="course-img">
 										<a href="course-details.html">
-											<img src="assets/img/course/course-55.jpg" alt="img" class="img-fluid">
+											<img src="../assets/img/course/course-55.jpg" alt="img" class="img-fluid">
 										</a>
 										<div
 											class="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-3">
@@ -983,7 +983,7 @@ if(!isset($_SESSION['user_id'])) {
 										<div class="d-flex justify-content-between mb-2">
 											<div class="d-flex align-items-center">
 												<a href="instructor-details.html" class="avatar avatar-sm">
-													<img src="assets/img/user/user-30.jpg" alt="img"
+													<img src="../assets/img/user/user-30.jpg" alt="img"
 														class="img-fluid avatar avatar-sm rounded-circle">
 												</a>
 												<div class="ms-2">
@@ -1013,7 +1013,7 @@ if(!isset($_SESSION['user_id'])) {
 								<div class="course-item-two course-item mb-0">
 									<div class="course-img">
 										<a href="course-details.html">
-											<img src="assets/img/course/course-51.jpg" alt="img" class="img-fluid">
+											<img src="../assets/img/course/course-51.jpg" alt="img" class="img-fluid">
 										</a>
 										<div
 											class="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-3">
@@ -1025,7 +1025,7 @@ if(!isset($_SESSION['user_id'])) {
 										<div class="d-flex justify-content-between mb-2">
 											<div class="d-flex align-items-center">
 												<a href="instructor-details.html" class="avatar avatar-sm">
-													<img src="assets/img/user/user-31.jpg" alt="img"
+													<img src="../assets/img/user/user-31.jpg" alt="img"
 														class="img-fluid avatar avatar-sm rounded-circle">
 												</a>
 												<div class="ms-2">
