@@ -39,6 +39,9 @@
 	<!-- Feathericon CSS -->
 	<link rel="stylesheet" href="../assets/plugins/feather/feather.css">
 
+	<!-- Tabler Icon CSS -->
+	<link rel="stylesheet" href="../assets/plugins/tabler-icons/tabler-icons.css">
+
 	<!-- Iconsax CSS -->
 	<link rel="stylesheet" href="../assets/css/iconsax.css">
 

@@ -7,11 +7,11 @@ if(!isset($_SESSION['user_id'])) {
 	exit();
 }
 
-// if ($_SESSION['user_type'] != 3) {
+if ($_SESSION['user_type'] != 3) {
 	
-// 	header("Location: ../index.php");
-// 	exit();
-// }
+	header("Location: ../auth/login.php");
+	exit();
+}
 
 ?>
 

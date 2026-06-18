@@ -33,6 +33,8 @@ if (isset($_POST['login'])) {
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_type'] = $user['user_type'];
 
+            $_SESSION['profile_pic'] = $user['profile_pic'];
+
 
             if ($user['user_type'] == 1) {
                 header("Location: ../admin/dashboard.php");
@@ -43,7 +45,7 @@ if (isset($_POST['login'])) {
             }
 
             else {
-                  header("Location: ../student/dashboard.php");
+                  header("Location: ../student/course-grid.php");
             }
 
             exit();

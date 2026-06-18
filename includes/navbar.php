@@ -1,7 +1,11 @@
 
 <?php
 
-session_start();
+// session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 ?>
 <!-- Header -->
@@ -37,118 +41,6 @@ session_start();
 				<ul class="main-nav">
 					<li class="has-submenu megamenu">
 						<a href="#">Home <i class="isax isax-add"></i></a>
-						<!-- <ul class="submenu mega-submenu">
-							<li>
-								<div class="megamenu-wrapper">
-									<div class="row">
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-2.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-01.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-2.html" class="inner-demo-img">General
-														Education</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-3.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-02.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-3.html" class="inner-demo-img">Online
-														Course</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-4.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-03.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-4.html" class="inner-demo-img">Online
-														Academy</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-5.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-04.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-5.html" class="inner-demo-img">Digital
-														Learning</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-8.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-07.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-8.html" class="inner-demo-img">
-														University</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-7.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-06.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-7.html" class="inner-demo-img">Kinder
-														Garden</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-6.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-05.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-6.html" class="inner-demo-img">Language
-														Academy</a>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-3">
-											<div class="single-demo">
-												<div class="demo-img">
-													<a href="index-9.html" class="inner-demo-img"><img
-															src="../assets/img/home/home-08.jpg" class="img-fluid "
-															alt="img"></a>
-												</div>
-												<div class="demo-info">
-													<a href="index-9.html" class="inner-demo-img"> Gym Training
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul> -->
 					</li>
 					<li class="has-submenu">
 						<a href="#">Courses <i class="isax isax-add"></i></a>

@@ -61,15 +61,15 @@
                                 </div>
                                 <div class="footer-contact-info">
                                     <div class="footer-address d-flex align-items-center">
-                                        <img src="assets/img/icon/icon-20.svg" alt="Img" class="img-fluid me-2">
+                                        <!-- <img src="assets/img/icon/icon-20.svg" alt="Img" class="img-fluid me-2"> -->
                                         <p> 3556 Beech Street, San Francisco,<br> California, CA 94108 </p>
                                     </div>
                                     <div class="footer-address d-flex align-items-center">
-                                        <img src="assets/img/icon/icon-19.svg" alt="Img" class="img-fluid me-2">
+                                        <!-- <img src="assets/img/icon/icon-19.svg" alt="Img" class="img-fluid me-2"> -->
                                         <p>dreamslms@example.com</p>
                                     </div>
                                     <div class="footer-address d-flex align-items-center">
-                                        <img src="assets/img/icon/icon-21.svg" alt="Img" class="img-fluid me-2">
+                                        <!-- <img src="assets/img/icon/icon-21.svg" alt="Img" class="img-fluid me-2"> -->
                                         <p>+19 123-456-7890</p>
                                     </div>
                                 </div>

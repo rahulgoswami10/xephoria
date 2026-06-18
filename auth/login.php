@@ -139,7 +139,7 @@ $_SESSION['captcha'] = $captcha;
                                     </div>
 
                                     <div class="fs-14 fw-normal d-flex align-items-center justify-content-center">
-                                        Don't you have an account?<a href="register.html" class="link-2 ms-1"> Sign up</a>
+                                        Don't you have an account?<a href="register.php" class="link-2 ms-1"> Sign up</a>
                                     </div>
     
                                     <!-- /Login -->
