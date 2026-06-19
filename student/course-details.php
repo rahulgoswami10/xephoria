@@ -17,6 +17,61 @@
 		exit();
 	}
 
+
+
+	if (!isset($_GET['slug']) || empty($_GET['slug'])) {
+    header("Location: course-grid.php");
+    exit();
+	}
+
+
+	$slug = mysqli_real_escape_string($conn, $_GET['slug']);
+
+
+
+
+
+	$sql = "
+	SELECT
+		courses.*,
+		users.name AS instructor_name,
+		categories.category_name AS category_name
+	FROM courses
+	LEFT JOIN users ON users.id = courses.instructor_id
+	LEFT JOIN categories ON categories.id = courses.category_id
+	WHERE courses.slug = '$slug'
+	LIMIT 1
+	";
+
+	$result = mysqli_query($conn, $sql);
+
+	if(mysqli_num_rows($result) == 0){
+		header("Location: course-grid.php");
+		exit();
+	}
+
+	$course = mysqli_fetch_assoc($result);
+
+
+	$sections_query = mysqli_query(
+		$conn,
+		"SELECT *
+		FROM course_sections
+		WHERE course_id = {$course['id']}
+		ORDER BY id ASC"
+	);
+
+
+
+	$lesson_count_query = mysqli_query(
+		$conn,
+		"SELECT COUNT(*) AS total
+		FROM lessons
+		WHERE course_id = {$course['id']}"
+	);
+
+	$lesson_count = mysqli_fetch_assoc($lesson_count_query)['total'];
+
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +82,14 @@
 
 <body>
 
-	<!-- Main Wrapper -->
+	<!--======================================================= Main Wrapper =======================================================-->
 	<div class="main-wrapper">
 
 
-		<!-- topbar -->
+		<!--======================================================= topbar =======================================================-->
 		<?php @include('includes/topbar.php'); ?>
 
-		<!-- navbar -->
+		<!--======================================================= navbar =======================================================-->
 		<?php @include('includes/navbar.php'); ?>
 
 		<!-- banner -->
@@ -42,19 +97,48 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8">
-						<h1 class="text-white mb-3 mb-sm-2">The Complete Web Developer Course 2.0</h1>
-						<p class="text-white fs-14 mb-3">Learn Web Development by building 25 websites and mobile apps
-							using HTML, CSS, Javascript, PHP, Python</p>
-						<div
-							class="d-flex align-items-center gap-2 gap-sm-3 gap-xl-4 flex-wrap justify-content-md-start justify-content-center">
-							<p class="fw-medium text-white d-flex align-items-center mb-0"><img class="me-2"
-									src="../assets/img/icons/book.svg" alt="img">12+ Lesson</p>
-							<p class="fw-medium text-white d-flex align-items-center mb-0"><img class="me-2"
-									src="../assets/img/icons/timer-start.svg" alt="img">9hr 30min</p>
-							<p class="fw-medium text-white d-flex align-items-center mb-0"><img class="me-2"
-									src="../assets/img/icons/people.svg" alt="img">32 students enrolled</p>
-							<span class="badge badge-sm rounded-pill bg-warning fs-12">Web Development</span>
+
+						<!-- lesson title -->
+						<h1 class="text-white mb-3 mb-sm-2">
+							<?= htmlspecialchars($course['title']); ?>
+						</h1>
+
+						<!-- lesson description -->
+						<p class="text-white fs-14 mb-3">
+							<?= htmlspecialchars($course['short_description']); ?>
+						</p>
+
+						<div class="d-flex align-items-center gap-2 gap-sm-3 gap-xl-4 flex-wrap justify-content-md-start justify-content-center">
+
+							<!-- lesson count -->
+							<p class="fw-medium text-white d-flex align-items-center mb-0">
+
+								<img class="me-2" src="../assets/img/icons/book.svg" alt="img">
+								<?= $lesson_count ?> Lessons
+
+							</p>
+
+							<!-- course duration -->
+							<p class="fw-medium text-white d-flex align-items-center mb-0">
+
+								<img class="me-2" src="../assets/img/icons/timer-start.svg" alt="img">
+								<?= $course['course_duration']; ?> 
+
+							</p>
+
+							<!--  -->
+							<p class="fw-medium text-white d-flex align-items-center mb-0">
+								<img class="me-2" src="../assets/img/icons/people.svg" alt="img">
+								32 students enrolled
+							</p>
+
+							<!-- category name -->
+							<span class="badge badge-sm rounded-pill bg-warning fs-12">
+								<?= htmlspecialchars($course['category_name']); ?>
+							</span>
 						</div>
+
+
 						<div class="d-sm-flex align-items-center justify-content-sm-between mt-5">
 							<div
 								class="d-flex text-start align-items-center justify-content-sm-start justify-content-center">
@@ -62,7 +146,10 @@
 									<img class="rounded-circle" src="../assets/img/avatar/avatar10.jpg" alt="img">
 								</div>
 								<div class="ms-2">
-									<h6 class="fs-18 text-white"><a href="instructor-details.html">Nicole Brown</a></h6>
+									<!-- instructor name -->
+									<h6 class="fs-18 text-white">
+										<a href="instructor-details.html"><?= htmlspecialchars($course['instructor_name']); ?></a>
+									</h6>
 									<p class="text-white fs-14">Instructor</p>
 								</div>
 							</div>
@@ -92,14 +179,12 @@
 								<div class="card-body">
 									<h5 class="subs-title mb-3">Overview</h5>
 									<h6 class="mb-3">Course Description</h6>
-									<p>Embark on a transformative journey into AI with Mike Wheeler, your guide in this
-										Udemy Best Seller course on ChatGPT and Prompt Engineering. As an experience
-										instructor who has taught well over 300,000 students, Mike unveils the secrets
-										of developing your own custom GPTs, ensuring your skills shine in the thriving
-										digital marketplace. </p>
-									<p>This course will get your familiar with Generative AI and the effective use of
-										ChatGPT and is perfect for the beginner. You will also learn advanced prompting
-										techniques to take your Prompt Engineering skills to the next level!</p>
+
+									<!-- course description -->
+									<p>
+										<?= $course['description']; ?>
+									</p>
+										
 									<h6 class="mb-3">What you'll learn</h6>
 									<ul class="custom-list">
 										<li class="list-items">Become a UX designer</li>
@@ -108,295 +193,152 @@
 										<li class="list-items">Build & test a full website design.</li>
 										<li class="list-items">Build & test a full mobile app.</li>
 									</ul>
-									<h6 class="mb-3 mt-4">Requirements</h6>
+
+									<!-- <h6 class="mb-3 mt-4">Requirements</h6>
 									<ul class="custom-list mb-0">
 										<li class="list-items">You will need a copy of Adobe XD 2019 or above. A free
 											trial can be downloaded from Adobe.</li>
 										<li class="list-items">No previous design experience is needed.</li>
 										<li class="list-items">No previous Adobe XD skills are needed.</li>
-									</ul>
+									</ul> -->
 								</div>
 							</div>
+
+
+							<?php
+								$total_lessons_query = mysqli_query(
+									$conn,
+									"SELECT COUNT(*) AS total
+									FROM lessons
+									WHERE course_id = {$course['id']}"
+								);
+
+								$total_lessons = mysqli_fetch_assoc($total_lessons_query);
+
+							?>
 							<div class="card">
 								<div class="card-body">
 									<div class="d-flex justify-content-between flex-wrap">
-										<h5 class="subs-title mb-2 mb-sm-3">Course Content</h5>
-										<h6 class="text-gray-7 mb-3">92 Lectures <span
-												class="text-secondary">10:56:11</span></h6>
+										<h5 class="subs-title mb-2 mb-sm-3">
+											Course Content
+										</h5>
+										<h6 class="text-gray-7 mb-3">
+											<?= $total_lessons['total']; ?> Lectures
+											<span class="text-secondary">
+												<?= $course['course_duration']; ?> 
+											</span>
+										</h6>
 									</div>
+
+
 									<div class="accordion accordion-customicon1 accordions-items-seperate p-0"
 										id="accordioncustomicon1Example">
-										<div class="accordion-item" data-aos="fade-up">
-											<h2 class="accordion-header" id="headingcustomicon1One">
-												<button class="accordion-button collapsed" type="button"
-													data-bs-toggle="collapse" data-bs-target="#collapsecustomicon1One"
-													aria-expanded="false" aria-controls="collapsecustomicon1One">
-													Getting Started <i class="fa-solid fa-chevron-down"></i>
+
+									<?php
+
+										$section_count = 1;
+
+										while($section = mysqli_fetch_assoc($sections_query)) {
+
+											$section_id = $section['id'];
+
+											$lessons_query = mysqli_query(
+												$conn,
+												"SELECT *
+												FROM lessons
+												WHERE section_id = $section_id
+												ORDER BY id ASC"
+											);
+
+										?>
+
+										<div class="accordion-item">
+
+											<h2 class="accordion-header"
+												id="heading<?= $section_count; ?>">
+
+												<button
+													class="accordion-button collapsed"
+													type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#collapse<?= $section_count; ?>">
+
+													<?= htmlspecialchars($section['section_title']); ?>
+
+													<i class="fa-solid fa-chevron-down"></i>
+
 												</button>
+
 											</h2>
-											<div id="collapsecustomicon1One" class="accordion-collapse collapse"
-												aria-labelledby="headingcustomicon1One"
+
+											<div
+												id="collapse<?= $section_count; ?>"
+												class="accordion-collapse collapse"
 												data-bs-parent="#accordioncustomicon1Example">
+
 												<div class="accordion-body p-0">
+
 													<ul>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.1 Introduction to the User
-																Experience Course</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.2 Exercise: Your first design
-																challenge</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.3 How to solve the previous
-																exercise</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.4 Find out why smart objects are
-																amazing</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.5 How to use text layers
-																effectively</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
+
+														<?php while($lesson = mysqli_fetch_assoc($lessons_query)) { ?>
+
+															<li class="p-4 px-3 d-flex justify-content-between">
+
+																<p class="mb-0">
+
+																	<img
+																		class="me-2"
+																		src="../assets/img/icons/play.svg"
+																		alt="img">
+
+																	<?= htmlspecialchars($lesson['lesson_title']); ?>
+
+																</p>
+
+																<div class="d-flex gap-xl-5 gap-3">
+
+																	<?php if($lesson['is_preview'] == 1) { ?>
+
+																		<a href="#"
+																		class="preview-link">
+
+																			Preview
+
+																		</a>
+
+																	<?php } ?>
+
+																	<p class="mb-0">
+
+																		<?= $lesson['duration']; ?> Minutes
+
+																	</p>
+
+																</div>
+
+															</li>
+
+														<?php } ?>
+
 													</ul>
+
 												</div>
+
 											</div>
-										</div>
-										<div class="accordion-item" data-aos="fade-up" data-aos-delay="250">
-											<h2 class="accordion-header" id="headingcustomicon1Two">
-												<button class="accordion-button collapsed" type="button"
-													data-bs-toggle="collapse" data-bs-target="#collapsecustomicon1Two"
-													aria-expanded="false" aria-controls="collapsecustomicon1Two">
-													The Brief<i class="fa-solid fa-chevron-down"></i>
-												</button>
-											</h2>
-											<div id="collapsecustomicon1Two" class="accordion-collapse collapse"
-												aria-labelledby="headingcustomicon1Two"
-												data-bs-parent="#accordioncustomicon1Example">
-												<div class="accordion-body p-0">
-													<ul>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.1 Introduction to the User
-																Experience Course</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.2 Exercise: Your first design
-																challenge</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.3 How to solve the previous
-																exercise</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.4 Find out why smart objects are
-																amazing</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.5 How to use text layers
-																effectively</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
-											<h2 class="accordion-header" id="headingcustomicon1Three">
-												<button class="accordion-button collapsed" type="button"
-													data-bs-toggle="collapse" data-bs-target="#collapsecustomicon1Three"
-													aria-expanded="false" aria-controls="collapsecustomicon1Three">
-													Wireframing Low Fidelity<i class="fa-solid fa-chevron-down"></i>
-												</button>
-											</h2>
-											<div id="collapsecustomicon1Three" class="accordion-collapse collapse"
-												aria-labelledby="headingcustomicon1Three"
-												data-bs-parent="#accordioncustomicon1Example">
-												<div class="accordion-body p-0">
-													<ul>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.1 Introduction to the User
-																Experience Course</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.2 Exercise: Your first design
-																challenge</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.3 How to solve the previous
-																exercise</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.4 Find out why smart objects are
-																amazing</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.5 How to use text layers
-																effectively</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="accordion-item mb-0" data-aos="fade-up" data-aos-delay="350">
-											<h2 class="accordion-header" id="headingcustomicon1Four">
-												<button class="accordion-button collapsed" type="button"
-													data-bs-toggle="collapse" data-bs-target="#collapsecustomicon1Four"
-													aria-expanded="false" aria-controls="collapsecustomicon1Four">
-													Type, Color & Icon Introduction<i
-														class="fa-solid fa-chevron-down"></i>
-												</button>
-											</h2>
-											<div id="collapsecustomicon1Four" class="accordion-collapse collapse"
-												aria-labelledby="headingcustomicon1Four"
-												data-bs-parent="#accordioncustomicon1Example">
-												<div class="accordion-body p-0">
-													<ul>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.1 Introduction to the User
-																Experience Course</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.2 Exercise: Your first design
-																challenge</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.3 How to solve the previous
-																exercise</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.4 Find out why smart objects are
-																amazing</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-														<li class="p-4 px-3 pb-0 d-flex justify-content-between">
-															<p class="mb-0"><img class="me-2"
-																	src="../assets/img/icons/play.svg"
-																	alt="img">Lecture1.5 How to use text layers
-																effectively</p>
-															<div class="d-flex gap-xl-5 gap-3">
-																<a href="#" class="preview-link">Preview</a>
-																<p class="mb-0">02:53</p>
-															</div>
-														</li>
-													</ul>
-												</div>
-											</div>
+
 										</div>
 
+										<?php
+
+										$section_count++;
+
+										}
+
+									?>
+
 									</div>
+
+
 								</div>
 							</div>
 							<div class="card">
@@ -482,7 +424,7 @@
 												</div>
 											</div>
 											<div class="col-12">
-												<button type="submit" class="btn btn-primary post-btn">Submit</button>
+												<button type="submit" class="btn btn-primary post-btn">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
 											</div>
 										</div>
 									</form>
@@ -497,7 +439,8 @@
 									<div class="position-relative mb-4">
 										<a href="https://www.youtube.com/embed/1trvO6dqQUI" id="openVideoBtn"
 											target="_blank">
-											<img class="img-fluid" src="../assets/img/course/video-bg.jpg" alt="img">
+											<img class="img-fluid" src="../uploads/course_thumbnails/<?= $course['thumbnail']; ?>" 
+											alt="<?= htmlspecialchars($course['title']); ?>">
 											<div class="play-icon">
 												<i class="ti ti-player-play-filled fs-28"></i>
 											</div>
@@ -510,9 +453,19 @@
 										</div>
 									</div>
 									<div class="d-flex justify-content-between align-items-center mb-4">
-										<h2 class="text-success fs-30">FREE</h2>
-										<p class="mb-0"><span class="text-decoration-line-through me-2">$99.00</span>50%
-											off</p>
+										<?php if($course['is_free']) { ?>
+
+											<h2 class="text-success fs-30">FREE</h2>
+
+										<?php } else { ?>
+
+											<h2 class="text-success fs-30">
+												₹<?= number_format($course['price'],2); ?>
+											</h2>
+
+										<?php } ?>
+										<!-- <p class="mb-0"><span class="text-decoration-line-through me-2">$99.00</span>50%
+											off</p> -->
 									</div>
 									<div class="d-flex justify-content-between gap-3 wishlist-btns">
 										<a class="btn d-flex btn-wish" href="student-wishlist.html"><i
@@ -520,7 +473,9 @@
 										<a class="btn d-flex btn-wish" href="#"><i
 												class="ti ti-share me-1 fs-18"></i>Share</a>
 									</div>
-									<a href="cart.html" class="btn btn-primary w-100 mt-4 btn-enroll">Enroll Now</a>
+									<a href="cart.html" class="btn btn-primary w-100 mt-4 btn-enroll">
+										Enroll Now
+									</a>
 								</div>
 							</div>
 							<div class="card">
@@ -549,8 +504,10 @@
 													alt="img">Enrolled: 32 students</p>
 										</li>
 										<li>
-											<p class="mb-0"><img class="me-2" src="../assets/img/icons/timer-start3.svg"
-													alt="img">Duration: 20 hours</p>
+											<p class="mb-0">
+												<img class="me-2" src="../assets/img/icons/timer-start3.svg"alt="img">
+												<?= $course['course_duration']; ?>  
+											</p>
 										</li>
 										<li>
 											<p class="mb-0"><img class="me-2" src="../assets/img/icons/note.svg"
@@ -578,7 +535,7 @@
 		<?php @include('includes/footer.php') ?>
 
 	</div>
-	<!-- Main Wrapper -->
+	<!--======================================================= Main Wrapper =======================================================-->
 
 
 </body>

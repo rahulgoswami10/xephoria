@@ -132,15 +132,15 @@ if (session_status() === PHP_SESSION_NONE) {
 									href="instructor-course.html"><i
 										class="isax isax-teacher me-2"></i>Courses</a>
 							</li>
-							<li>
+							<!-- <li>
 								<a class="dropdown-item d-inline-flex align-items-center rounded fw-medium2"
 									href="instructor-earnings.html"><i
 										class="isax isax-dollar-circle me-2"></i>Earnings</a>
-							</li>
-							<li>
+							</li> -->
+							<!-- <li>
 								<a class="dropdown-item d-inline-flex align-items-center rounded fw-medium"
 									href="instructor-payout.html"><i class="isax isax-coin me-2"></i>Payouts</a>
-							</li>
+							</li> -->
 							<li>
 								<a class="dropdown-item d-inline-flex align-items-center rounded fw-medium"
 									href="instructor-message.html"><i
