@@ -286,12 +286,13 @@
 
 																<p class="mb-0">
 
-																	<img
-																		class="me-2"
-																		src="../assets/img/icons/play.svg"
-																		alt="img">
-
-																	<?= htmlspecialchars($lesson['lesson_title']); ?>
+																	<a href="course-watch.php?lesson_id=<?= $lesson['id']; ?>">
+																		<img
+																			class="me-2"
+																			src="../assets/img/icons/play.svg"
+																			alt="img">
+																		<?= htmlspecialchars($lesson['lesson_title']); ?>
+																	</a>
 
 																</p>
 
@@ -467,13 +468,15 @@
 										<!-- <p class="mb-0"><span class="text-decoration-line-through me-2">$99.00</span>50%
 											off</p> -->
 									</div>
+									
 									<div class="d-flex justify-content-between gap-3 wishlist-btns">
 										<a class="btn d-flex btn-wish" href="student-wishlist.html"><i
 												class="isax isax-heart me-1 fs-18"></i>Add to Wishlist</a>
 										<a class="btn d-flex btn-wish" href="#"><i
 												class="ti ti-share me-1 fs-18"></i>Share</a>
 									</div>
-									<a href="cart.html" class="btn btn-primary w-100 mt-4 btn-enroll">
+									<a href="../payments/cart.php?course_id=<?= $course['id']; ?>" 
+									   class="btn btn-primary w-100 mt-4 btn-enroll">
 										Enroll Now
 									</a>
 								</div>

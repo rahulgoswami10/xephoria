@@ -123,6 +123,9 @@
 <script src="../assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
 <script src="../assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
 
+<!-- Select2 JS -->
+<script src="assets/plugins/select2/js/select2.min.js"></script>
+
 <!-- Custom JS -->
 <script src="../assets/js/script.js"></script>
 

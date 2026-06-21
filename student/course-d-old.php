@@ -23,8 +23,6 @@
 <html lang="en">
 
 
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-
 <!-- header -->
 <?php @include('includes/header.php'); ?>
 
