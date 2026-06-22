@@ -233,11 +233,12 @@ if (count($cart_items) == 0) {
 											<div class="col-md-12">
 												<div class="d-flex align-items-center justify-content-end">
 													<!-- <a href="#" class="btn btn-secondary rounded-pill">Pay $200.25</a> -->
-													<button
-														id="rzp-button"
-														class="btn btn-secondary rounded-pill">
+													<!-- <button id="rzp-button" class="btn btn-secondary rounded-pill"> </button> -->
+
+													<a href="success.php" 
+													   class="btn btn-secondary rounded-pill">
 														Pay ₹<?= number_format($total,2) ?>
-													</button>
+													</a>
 												</div>
 											</div>
 										</div>
