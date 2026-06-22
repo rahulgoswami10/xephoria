@@ -475,7 +475,7 @@
 										<a class="btn d-flex btn-wish" href="#"><i
 												class="ti ti-share me-1 fs-18"></i>Share</a>
 									</div>
-									<a href="../payments/cart.php?course_id=<?= $course['id']; ?>" 
+									<a href="../payments/cart-action.php?course_id=<?= $course['id']; ?>" 
 									   class="btn btn-primary w-100 mt-4 btn-enroll">
 										Enroll Now
 									</a>

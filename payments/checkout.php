@@ -1,5 +1,9 @@
 <?php
 
+require_once("../db/connection.php");
+
+session_start();
+
 if (!isset($_SESSION['user_id'])) {
 	header('Location: ../auth/login.php');
 	exit();
@@ -10,6 +14,35 @@ if ($_SESSION['user_type'] != 3) {
 	exit();
 }
 
+
+$student_id = $_SESSION['user_id'];
+
+$cart_query = mysqli_query(
+    $conn,
+    "
+    SELECT
+        cart.id AS cart_id,
+        courses.*
+    FROM cart
+    INNER JOIN courses
+        ON courses.id = cart.course_id
+    WHERE cart.student_id = {$student_id}
+    "
+);
+
+$total = 0;
+$cart_items = [];
+
+while ($row = mysqli_fetch_assoc($cart_query)) {
+    $cart_items[] = $row;
+    $total += $row['price'];
+}
+
+
+if (count($cart_items) == 0) {
+	header("Location: cart.php");
+    exit();
+}
 
 ?>
 
@@ -141,38 +174,31 @@ if ($_SESSION['user_type'] != 3) {
 								<div class="border-bottom pb-3 mb-3">
 									<h5>Payment Method </h5>
 								</div>
-								<ul class="nav-tabs mb-3 nav-justified border-0 nav-style-1 d-sm-flex d-block"
+								<!-- <ul class="nav-tabs mb-3 nav-justified border-0 nav-style-1 d-sm-flex d-block"
 									role="tablist">
+
 									<li class="nav-item active">
 										<a class="btn nav-link p-3 active" data-bs-toggle="tab" role="tab"
 											href="#overview" aria-selected="false">
 											<div class="d-flex justify-content-center align-items-center">
-												<img src="assets/img/icons/card.svg" alt="card" class="img-fluid me-2">
+												<img src="../assets/img/icons/card.svg" alt="card" class="img-fluid me-2">
 												<p class="fw-medium">Card</p>
 											</div>
 										</a>
 									</li>
-									<li class="nav-item">
-										<a class="btn nav-link p-3" data-bs-toggle="tab" role="tab" href="#notes"
-											aria-selected="false">
-											<div class="d-flex justify-content-center align-items-center">
-												<img src="assets/img/icons/paypal-2.svg" alt="card"
-													class="img-fluid me-2">
-												<p class="fw-medium">Paypal</p>
-											</div>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="btn nav-link p-3" data-bs-toggle="tab" role="tab" href="#faq"
-											aria-selected="true">
-											<div class="d-flex justify-content-center align-items-center">
-												<img src="assets/img/icons/stripe.svg" alt="card"
-													class="img-fluid me-2">
-												<p class="fw-medium">Stripe</p>
-											</div>
-										</a>
-									</li>
-								</ul>
+
+								</ul> -->
+								
+								<!-- <div class="mt-3" style="margin-bottom: 20px;">
+									
+									<button
+										id="rzp-button"
+										class="btn btn-primary rounded-pill">
+										Pay ₹<?= number_format($total,2) ?>
+									</button>
+
+								</div> -->
+
 								<div class="tab-content">
 									<div class="tab-pane active show" id="overview" role="tabpanel">
 										<div class="row">
@@ -206,7 +232,12 @@ if ($_SESSION['user_type'] != 3) {
 											</div>
 											<div class="col-md-12">
 												<div class="d-flex align-items-center justify-content-end">
-													<a href="#" class="btn btn-secondary rounded-pill">Pay $200.25</a>
+													<!-- <a href="#" class="btn btn-secondary rounded-pill">Pay $200.25</a> -->
+													<button
+														id="rzp-button"
+														class="btn btn-secondary rounded-pill">
+														Pay ₹<?= number_format($total,2) ?>
+													</button>
 												</div>
 											</div>
 										</div>
@@ -266,48 +297,48 @@ if ($_SESSION['user_type'] != 3) {
 									<h5 class="mb-0">Order Details</h5>
 								</div>
 								<div class="checkout-item-3 bg-light p-3 rounded-3 border mb-3">
+
+									<?php foreach($cart_items as $item) { ?>
+
 									<div class="row row-gap-2 mb-3">
 										<div class="col-md-12 d-flex align-items-center">
+
 											<div class="order-img flex-shrink-0 me-3">
-												<img src="assets/img/course/course-01.jpg" alt="img"
+												<img
+													src="../uploads/course_thumbnails/<?= htmlspecialchars($item['thumbnail']) ?>"
 													class="img-fluid h-100 w-100">
-												<a href="javascript:void(0);" class="btn p-1 rounded-circle"><i
-														class="isax isax-trash"></i></a>
 											</div>
+
 											<div>
-												<h6 class="mb-2"><a href="course-details.html">Information About UI/UX
-														Design Degree</a></h6>
-												<h6 class="text-secondary">$120</h6>
+												<h6 class="mb-2">
+													<?= htmlspecialchars($item['title']) ?>
+												</h6>
+
+												<h6 class="text-secondary">
+													₹<?= number_format($item['price'],2) ?>
+												</h6>
 											</div>
+
 										</div>
 									</div>
-									<div class="row row-gap-2">
-										<div class="col-md-12 d-flex align-items-center">
-											<div class="order-img flex-shrink-0 me-3">
-												<img src="assets/img/course/course-03.jpg" alt="img"
-													class="img-fluid h-100 w-100">
-												<a href="javascript:void(0);" class="btn p-1 rounded-circle"><i
-														class="isax isax-trash"></i></a>
-											</div>
-											<div>
-												<h6 class="mb-2"><a href="course-details.html">Sketch from A to Z
-														(2024): Become an app designer</a></h6>
-												<h6 class="text-secondary">$160</h6>
-											</div>
-										</div>
-									</div>
+
+									<?php } ?>
+
 								</div>
+
 								<div class="d-flex align-items-center justify-content-between mb-2">
 									<p class="mb-0">Sub Total</p>
-									<p class="text-gray-9 fw-medium mb-0">$200.20</p>
+									<p class="text-gray-9 fw-medium mb-0">₹<?= number_format($total,2) ?></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+
+								<!-- <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
 									<p class="mb-0">Tax (VAT)</p>
 									<p class="text-gray-9 fw-medium mb-0">$25</p>
-								</div>
+								</div> -->
+
 								<div class="total d-flex align-items-center justify-content-between">
 									<h6 class="mb-0">Total</h6>
-									<h4 class="mb-0">$225.20</h4>
+									<h4 class="mb-0">₹<?= number_format($total,2) ?></h4>
 								</div>
 							</div>
 						</div>
@@ -323,6 +354,36 @@ if ($_SESSION['user_type'] != 3) {
 	</div>
 	<!-- =================================================================Main Wrapper =================================================================-->
 
+	<!-- razorpay checkout cdn -->
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+	<!-- razorpay popup -->
+	<script>
+		document.getElementById('rzp-button').onclick = function (e) {
+
+			var options = {
+				key: "rzp_test_YOUR_KEY_ID",
+				amount: <?= $total * 100 ?>,
+				currency: "INR",
+				name: "My LMS",
+				description: "Course Purchase",
+
+				handler: function (response) {
+
+					window.location.href =
+						"../payments/payment-success.php"
+						+ "?payment_id=" + response.razorpay_payment_id
+						+ "&signature=" + response.razorpay_signature;
+				}
+			};
+
+			var rzp = new Razorpay(options);
+			rzp.open();
+
+			e.preventDefault();
+		}
+	</script>
+</body>
 
 
 </html>
