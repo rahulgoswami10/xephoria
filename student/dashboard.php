@@ -19,8 +19,7 @@ if ($_SESSION['user_type'] != 3) {
 <html lang="en">
 
 
-<!-- Mirrored from dreamslms.dreamstechnologies.com/html/template/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Jun 2026 20:50:40 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<!-- head -->
 <?php @include('../includes/header.php'); ?>
 
 <body>

@@ -1,21 +1,21 @@
-	<?php
-	require_once("../db/connection.php");
+<?php
+require_once("../db/connection.php");
 
-	session_start();
+session_start();
 
-	if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
 
-		header("Location: ../auth/login.php");
-		exit();
-	}
+	header("Location: ../auth/login.php");
+	exit();
+}
 
-	if ($_SESSION['user_type'] != 3) {
-		
-		header("Location: ../auth/login.php");
-		// header("Location: ../errors/403.php");
+if ($_SESSION['user_type'] != 3) {
+	
+	header("Location: ../auth/login.php");
+	// header("Location: ../errors/403.php");
 
-		exit();
-	}
+	exit();
+}
 
 $query = "
 
@@ -56,7 +56,7 @@ $result = mysqli_query($conn, $query);
 
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
-<!-- header -->
+<!-- head -->
 <?php @include('includes/header.php'); ?>
 
 <body>

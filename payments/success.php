@@ -4,7 +4,7 @@ require_once("../db/connection.php");
 
 session_start();
 
-if (!isset($_SESSION['user_id']) && $_SESSION['user_type'] != 3) {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 3) {
 
     header("Location: ../auth/login.php");
     exit();
